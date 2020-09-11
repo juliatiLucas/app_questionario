@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/signin.c.dart';
+import './signup.v.dart';
+import '../components/rec_input.dart';
 
 class SignInView extends StatelessWidget {
   @override
@@ -22,7 +24,7 @@ class SignInView extends StatelessWidget {
                   Opacity(opacity: 0.8, child: Text('Bem-vindo', style: TextStyle(color: Colors.white, fontSize: 16))),
                   Text(
                     'Login',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
                   ),
                 ],
               ),
@@ -30,31 +32,12 @@ class SignInView extends StatelessWidget {
             Expanded(
               child: Container(
                   padding: EdgeInsets.symmetric(vertical: 35, horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                  ),
+                  decoration: BoxDecoration(color: Colors.white),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                     Text('E-mail'),
-                    TextField(
-                      controller: ctr.email,
-                      decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 10)),
-                    ),
-                    SizedBox(height: 15),
+                    RecInput(controller: ctr.email),
                     Text('Senha'),
-                    TextField(
-                      controller: ctr.password,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 10)),
-                    ),
+                    RecInput(controller: ctr.password, obscureText: true),
                     SizedBox(height: 25),
                     OutlineButton(
                       borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -74,7 +57,7 @@ class SignInView extends StatelessWidget {
                         'Cadastre-se',
                         style: TextStyle(color: Colors.grey[600], fontSize: 16),
                       ),
-                      onPressed: () {},
+                      onPressed: () => Get.to(SignUpView(), transition: Transition.rightToLeft),
                     )
                   ])),
             ),

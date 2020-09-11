@@ -28,7 +28,7 @@ class SignInController extends GetxController {
           this.email.text = "";
           this.password.text = "";
           await Session.login(json.decode(res.body));
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(_) => HomeView()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeView()), (route) => false);
         } else if (res.statusCode == 400) {
           if (json.decode(res.body)['error'] == "usuario_nao_existe") {
             Snack.showSnack(title: "Erro", message: "Usuário não encontrado!");
