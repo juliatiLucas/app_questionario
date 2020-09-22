@@ -26,9 +26,9 @@ class Session {
     prefs.setString('token', token);
   }
 
-  static Future<String> getToken() async {
+  static Future<Map<String, String>> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    return {"Authorization": "Bearer ${prefs.getString('token')}"};
   }
 
   static Future<bool> isAuthenticated() async {

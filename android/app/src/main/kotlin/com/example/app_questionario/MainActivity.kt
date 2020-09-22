@@ -1,4 +1,4 @@
-package com.example.app_questionario
+package com.example.quiz_factory
 
 import io.flutter.embedding.android.FlutterActivity
 

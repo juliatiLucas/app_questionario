@@ -27,14 +27,16 @@ class SignInController extends GetxController {
         if (res.statusCode == 200) {
           this.email.text = "";
           this.password.text = "";
-          await Session.login(json.decode(res.body));
+
+          await Session.login(json.decode(res.body)['usuario']);
+          await Session.setToken(json.decode(res.body)['token']);
+
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeView()), (route) => false);
         } else if (res.statusCode == 400) {
-          if (json.decode(res.body)['error'] == "usuario_nao_existe") {
+          var erro = json.decode(res.body)['error'];
+          if (erro == "usuario_nao_existe")
             Snack.showSnack(title: "Erro", message: "Usuário não encontrado!");
-          } else if (json.decode(res.body)['error'] == "senha_incorreta") {
-            Snack.showSnack(title: "Erro", message: "Senha incorreta!");
-          }
+          else if (erro == "senha_incorreta") Snack.showSnack(title: "Erro", message: "Senha incorreta!");
         }
       });
     }
