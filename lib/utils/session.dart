@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import '../main.dart';
 
 class Session {
   static Future<Map<String, dynamic>> getUserInfo() async {
@@ -34,5 +36,9 @@ class Session {
   static Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isAuthenticated');
+  }
+
+  static checkStatus(BuildContext context, int status) {
+    if (status == 401) Wrapper.restartApp(context);
   }
 }

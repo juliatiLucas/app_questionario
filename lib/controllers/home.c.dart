@@ -11,10 +11,12 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
   Rx<List<QuestionarioModel>> questionarios = Rx<List<QuestionarioModel>>();
 
-  Future<void> getQuestionarios() async {
+  Future<void> getQuestionarios(BuildContext context) async {
     List<QuestionarioModel> questionarios = [];
     var token = await Session.getToken();
     http.get("${Api.address}/questionarios", headers: token).then((res) {
+      Session.checkStatus(context, res.statusCode);
+      
       if (res.statusCode == 200) {
         for (var q in json.decode(res.body)) questionarios.add(new QuestionarioModel.fromJson(q));
 

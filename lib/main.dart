@@ -9,18 +9,27 @@ void main() {
       title: 'Questionário',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xff4389fa),
+        primaryColor: Color(0xff1D76DF),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Wrapper()));
 }
 
 class Wrapper extends StatefulWidget {
+  Wrapper({this.child});
+
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_WrapperState>().restartApp();
+  }
+
   @override
   _WrapperState createState() => _WrapperState();
 }
 
 class _WrapperState extends State<Wrapper> {
+  Key key = UniqueKey();
   Future<bool> isAuthenticated() async {
     bool auth = await Session.isAuthenticated() ?? false;
     await Future.delayed(Duration(milliseconds: 2500), () {});
@@ -28,22 +37,31 @@ class _WrapperState extends State<Wrapper> {
     return auth;
   }
 
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: FutureBuilder(
-      future: this.isAuthenticated(),
-      builder: (_, snapshot) {
-        Widget ret;
+    return KeyedSubtree(
+      key: this.key,
+      child: Scaffold(
+          body: FutureBuilder(
+        future: this.isAuthenticated(),
+        builder: (_, snapshot) {
+          Widget ret;
 
-        if (snapshot.connectionState == ConnectionState.waiting)
-          ret = Center(child: CircularProgressIndicator());
-        else if (snapshot.connectionState == ConnectionState.done) {
-          ret = snapshot.data ? HomeView() : SignInView();
-        }
+          if (snapshot.connectionState == ConnectionState.waiting)
+            ret = Center(child: CircularProgressIndicator());
+          else if (snapshot.connectionState == ConnectionState.done) {
+            ret = snapshot.data ? HomeView() : SignInView();
+          }
 
-        return ret;
-      },
-    ));
+          return ret;
+        },
+      )),
+    );
   }
 }

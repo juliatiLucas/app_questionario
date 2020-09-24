@@ -8,59 +8,60 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      resizeToAvoidBottomInset: false,
       body: GetBuilder<SignInController>(
         init: Get.put(SignInController()),
         builder: (ctr) => Container(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.18),
-            Padding(
-              padding: EdgeInsets.only(left: 16, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Opacity(opacity: 0.8, child: Text('Bem-vindo', style: TextStyle(color: Colors.white, fontSize: 16))),
-                  Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
-                  ),
-                ],
+            Container(
+              height: 240,
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, bottom: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Opacity(opacity: 0.8, child: Text('Bem-vindo', style: TextStyle(color: Colors.white, fontSize: 16))),
+                    Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Expanded(
-              child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 20),
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    Text('E-mail'),
-                    RecInput(controller: ctr.email),
-                    Text('Senha'),
-                    RecInput(controller: ctr.password, obscureText: true),
-                    SizedBox(height: 25),
-                    OutlineButton(
-                      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                      highlightColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                      splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      child: Text(
-                        'Acessar',
-                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
-                      ),
-                      onPressed: () => ctr.login(context),
+            Container(
+                padding: EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  Text('E-mail'),
+                  RecInput(controller: ctr.email),
+                  Text('Senha'),
+                  RecInput(controller: ctr.password, obscureText: true),
+                  SizedBox(height: 25),
+                  OutlineButton(
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                    highlightColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    child: Text(
+                      'Acessar',
+                      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
                     ),
-                    SizedBox(height: 15),
-                    FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      child: Text(
-                        'Cadastre-se',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 16),
-                      ),
-                      onPressed: () => Get.to(SignUpView(), transition: Transition.rightToLeft),
-                    )
-                  ])),
-            ),
+                    onPressed: () => ctr.login(context),
+                  ),
+                  SizedBox(height: 15),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    child: Text(
+                      'Cadastre-se',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 16),
+                    ),
+                    onPressed: () => Get.to(SignUpView(), transition: Transition.rightToLeft),
+                  )
+                ])),
           ],
         )),
       ),

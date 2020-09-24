@@ -7,36 +7,41 @@ class SignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      resizeToAvoidBottomInset: false,
       body: GetBuilder<SignUpController>(
         init: Get.put(SignUpController()),
         builder: (ctr) => Container(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.18),
-            Padding(
-              padding: EdgeInsets.only(left: 16, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Opacity(opacity: 0.8, child: Text('Crie sua conta', style: TextStyle(color: Colors.white, fontSize: 16))),
-                  Text(
-                    'Cadastro',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
-                  ),
-                ],
+            Container(
+              height: 240,
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, bottom: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Opacity(opacity: 0.8, child: Text('Crie sua conta', style: TextStyle(color: Colors.white, fontSize: 16))),
+                    Text(
+                      'Cadastro',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Expanded(
-              child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 20),
-                  decoration: BoxDecoration(color: Colors.white),
+            Container(
+                padding: EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+                child: SingleChildScrollView(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                     Text('Nome'),
                     RecInput(controller: ctr.name),
                     Text('E-mail'),
                     RecInput(controller: ctr.email),
+                    Text('Telefone'),
+                    RecInput(controller: ctr.phone, keyboardType: TextInputType.number),
                     Text('Senha'),
                     RecInput(controller: ctr.password, obscureText: true),
                     SizedBox(height: 25),
@@ -52,8 +57,8 @@ class SignUpView extends StatelessWidget {
                       onPressed: () => ctr.signUp(context),
                     ),
                     SizedBox(height: 15),
-                  ])),
-            ),
+                  ]),
+                )),
           ],
         )),
       ),
