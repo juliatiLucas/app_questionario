@@ -44,11 +44,16 @@ class PerfilView extends StatelessWidget {
                               ctr.usuario.value != null
                                   ? Opacity(
                                       opacity: 0.85,
-                                      child: Text(
-                                        ctr.usuario.value.nome,
-                                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                    )
+                                      child: Column(children: [
+                                        Text(
+                                          ctr.usuario.value.nome,
+                                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          ctr.usuario.value.email,
+                                          style: TextStyle(color: Colors.white, fontSize: 16),
+                                        ),
+                                      ]))
                                   : SizedBox()
                             ],
                           ),

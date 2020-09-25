@@ -48,13 +48,14 @@ class _WrapperState extends State<Wrapper> {
     return KeyedSubtree(
       key: this.key,
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
           body: FutureBuilder(
         future: this.isAuthenticated(),
         builder: (_, snapshot) {
           Widget ret;
 
           if (snapshot.connectionState == ConnectionState.waiting)
-            ret = Center(child: CircularProgressIndicator());
+            ret = Center(child: Image.asset('assets/quiz-factory-inapp.png', width: 125,));
           else if (snapshot.connectionState == ConnectionState.done) {
             ret = snapshot.data ? HomeView() : SignInView();
           }

@@ -1,3 +1,3 @@
 class Api {
-  static final address = "https://api-recrutamento.herokuapp.com";
+  static final address = "https://quiz-factory.herokuapp.com";
 }

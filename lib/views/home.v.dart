@@ -76,8 +76,9 @@ class _HomeViewState extends State<HomeView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                  Text('Quiz Factory',
-                                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                  Image.asset('assets/quiz-factory-inapp.png', width: 50,),
+                                  // Text('Quiz Factory',
+                                  //     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                   PopupMenuButton<String>(
                                     onSelected: this.optionSelected,
                                     icon: Icon(Icons.more_vert, color: Colors.white),

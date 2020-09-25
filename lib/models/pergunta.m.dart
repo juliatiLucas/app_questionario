@@ -1,5 +1,5 @@
-import './questionario.m.dart';
 import 'dart:convert' show utf8;
+import './opcao.m.dart';
 
 String utf8convert(String text) {
   List<int> bytes = text.toString().codeUnits;
@@ -10,12 +10,17 @@ class PerguntaModel {
   int id;
   String pergunta;
   String tipo;
-  QuestionarioModel questionario;
+  List<OpcaoModel> opcoes;
 
   PerguntaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     pergunta = utf8convert(json['pergunta']);
     tipo = json['tipo'];
-    questionario = QuestionarioModel.fromJson(json['questionario']);
+
+    if (json['opcoes'] != null) {
+      List<OpcaoModel> opcoes = [];
+      for (var o in json['opcoes']) opcoes.add(new OpcaoModel.fromJson(o));
+      this.opcoes = opcoes;
+    }
   }
 }
