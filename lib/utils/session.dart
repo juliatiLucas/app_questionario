@@ -14,7 +14,6 @@ class Session {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isAuthenticated', true);
     prefs.setString('userData', json.encode(userData));
-    prefs.setString('lastEmail', userData['email']);
   }
 
   static Future<void> logout() async {
@@ -38,7 +37,12 @@ class Session {
     return prefs.getBool('isAuthenticated');
   }
 
-  static checkStatus(BuildContext context, int status) {
-    if (status == 401) Wrapper.restartApp(context);
+  static checkStatus(BuildContext context, int status) async {
+    if (status == 401) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userData', '{}');
+      prefs.setBool('isAuthenticated', false);
+      Wrapper.restartApp(context);
+    }
   }
 }

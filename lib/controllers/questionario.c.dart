@@ -57,7 +57,7 @@ class QuestionarioController extends GetxController {
         return;
       } else {
         data.add({
-          "resposta": resposta.resposta ?? "",
+          "resposta": resposta.resposta,
           "usuario": resposta.usuario.toString(),
           "opcao": resposta?.opcao?.id.toString(),
           "pergunta": resposta.pergunta.toString(),
@@ -65,9 +65,18 @@ class QuestionarioController extends GetxController {
       }
     }
 
-    print(data);
-    http.post("${Api.address}/respostas/", body: json.encode(data), headers: token).then((res) {
-      if (res.statusCode == 200) {}
+    http.post(
+      "${Api.address}/respostas/",
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json', ...token},
+    ).then((res) {
+      if (res.statusCode == 201) {
+        Snack.showSnack(title: "Sucesso", message: "Resposta enviada!");
+        List<Resposta> respostas = this.respostas.value;
+        respostas.map((r) => r.opcao = null);
+        this.respostas.value = respostas;
+        update();
+      }
     });
   }
 }

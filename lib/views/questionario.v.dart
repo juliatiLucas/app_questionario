@@ -16,39 +16,6 @@ class QuestionarioView extends StatefulWidget {
 class _QuestionarioViewState extends State<QuestionarioView> {
   final QuestionarioController _questionarioController = Get.put(QuestionarioController());
 
-  void menu() async {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) => Container(
-              height: 280,
-              padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Text(
-                  "Menu",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 25),
-                FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  color: Theme.of(context).primaryColor,
-                  child: Text("ENVIAR", style: TextStyle(color: Colors.white)),
-                  onPressed: _questionarioController.enviarResposta,
-                ),
-                SizedBox(height: 10),
-                FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  color: Colors.grey[200],
-                  child: Text("SAIR"),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                    Get.back();
-                  },
-                ),
-              ]),
-            ));
-  }
-
   int getIndex(List<PerguntaModel> perguntas, PerguntaModel pergunta) {
     int index = perguntas.indexOf(pergunta);
     return index;
@@ -74,17 +41,29 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                           SizedBox(height: 15),
                           SafeArea(
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(
-                                ctr.questionario.value.titulo,
-                                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              IconButton(
-                                color: Colors.white,
-                                icon: Icon(Icons.menu),
-                                onPressed: this.menu,
-                              )
+                              Row(children: [
+                                IconButton(
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: Navigator.of(context).pop,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  ctr.questionario.value.titulo.length > 24
+                                      ? ctr.questionario.value.titulo.toString().substring(0, 23) + '...'
+                                      : ctr.questionario.value.titulo,
+                                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              ]),
+                              Row(children: [
+                                IconButton(
+                                  color: Colors.white,
+                                  icon: Icon(Icons.check),
+                                  onPressed: ctr.enviarResposta,
+                                )
+                              ])
                             ]),
                           ),
+                          SizedBox(height: 20),
                           ...ctr.questionario.value.perguntas.map(
                             (PerguntaModel pergunta) => PerguntaCard(
                                 pergunta: pergunta,

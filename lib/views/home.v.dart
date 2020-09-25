@@ -102,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Positioned(
                     child: Padding(
-                        padding: EdgeInsets.only(left: 30, right: 30, top: 150, bottom: 50),
+                        padding: EdgeInsets.only(left: 18, right: 18, top: 150, bottom: 50),
                         child: Container(
                             width: size.width,
                             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
@@ -161,7 +161,7 @@ class _HomeViewState extends State<HomeView> {
                 Stack(children: [
                   Positioned(
                     child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
+                        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                         child: Container(
                             width: size.width,
                             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
