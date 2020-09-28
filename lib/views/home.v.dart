@@ -5,6 +5,8 @@ import '../controllers/home.c.dart';
 import '../components/questionario_card.dart';
 import '../views/perfil.v.dart';
 import '../utils/session.dart';
+import '../models/resposta.m.dart';
+import '../components/resposta_card.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -43,6 +45,11 @@ class _HomeViewState extends State<HomeView> {
             ));
   }
 
+  Future<void> getInfo(BuildContext context, HomeController ctr) async {
+    ctr.getQuestionarios(context);
+    ctr.getRespostas();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -52,9 +59,10 @@ class _HomeViewState extends State<HomeView> {
       init: Get.put(HomeController()),
       initState: (_) {
         HomeController.to.getQuestionarios(context);
+        HomeController.to.getRespostas();
       },
       builder: (ctr) => RefreshIndicator(
-          onRefresh: () => ctr.getQuestionarios(context),
+          onRefresh: () => this.getInfo(context, ctr),
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
               overscroll.disallowGlow();
@@ -76,7 +84,10 @@ class _HomeViewState extends State<HomeView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                  Image.asset('assets/quiz-factory-inapp.png', width: 50,),
+                                  Image.asset(
+                                    'assets/quiz-factory-inapp.png',
+                                    width: 50,
+                                  ),
                                   // Text('Quiz Factory',
                                   //     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                   PopupMenuButton<String>(
@@ -102,7 +113,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Positioned(
                     child: Padding(
-                        padding: EdgeInsets.only(left: 18, right: 18, top: 150, bottom: 50),
+                        padding: EdgeInsets.only(left: 18, right: 18, top: 150, bottom: 30),
                         child: Container(
                             width: size.width,
                             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
@@ -116,7 +127,7 @@ class _HomeViewState extends State<HomeView> {
                                     color: Colors.black.withOpacity(0.3),
                                   )
                                 ]),
-                            height: 250,
+                            height: 200,
                             child: Material(
                               color: Colors.transparent,
                               child: Column(
@@ -175,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
                                     color: Colors.black.withOpacity(0.3),
                                   )
                                 ]),
-                            height: 400,
+                            height: MediaQuery.of(context).size.width / 0.85,
                             child: Material(
                               color: Colors.transparent,
                               child: Column(
@@ -196,6 +207,19 @@ class _HomeViewState extends State<HomeView> {
                                           ))
                                     ]),
                                   ),
+                                  ctr.respostas.value != null
+                                      ? ctr.respostas.value.length > 0
+                                          ? Expanded(
+                                              child: ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              itemCount: ctr.respostas.value.length,
+                                              itemBuilder: (_, index) {
+                                                RespostaModel resposta = ctr.respostas.value[index];
+                                                return RespostaCard(resposta: resposta);
+                                              },
+                                            ))
+                                          : Text('Você ainda não respondeu a nenhum questionário.')
+                                      : CircularProgressIndicator()
                                 ],
                               ),
                             ))),

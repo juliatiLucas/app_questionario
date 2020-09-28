@@ -14,11 +14,18 @@ dependencies:
   get: ^3.8.0
   http: ^0.12.2
   shared_preferences: ^0.5.10
+  flutter_launcher_icons: ^0.8.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/quiz-factory-logo.png"
+  google_fonts: ^1.1.0
 
 flutter:
   uses-material-design: true

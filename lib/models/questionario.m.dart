@@ -18,7 +18,7 @@ class QuestionarioModel {
   QuestionarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     titulo = json['titulo'];
-    empresa = EmpresaModel.fromJson(json['empresa']);
+    empresa = json['empresa'] != null ? EmpresaModel.fromJson(json['empresa']) : null;
     cor = Color(int.parse(json['cor'].toString().replaceFirst('#', '0xff')));
 
     if (json['perguntas'] != null) {

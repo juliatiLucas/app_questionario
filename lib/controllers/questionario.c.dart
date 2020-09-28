@@ -5,13 +5,13 @@ import '../utils/session.dart';
 import '../utils/api.dart';
 import '../components/snack.dart';
 import '../models/questionario.m.dart';
-import '../models/resposta.m.dart';
+import '../models/resposta_usuario.dart';
 import '../models/opcao.m.dart';
 
 class QuestionarioController extends GetxController {
   static QuestionarioController get to => Get.find();
   Rx<QuestionarioModel> questionario = Rx<QuestionarioModel>();
-  Rx<List<Resposta>> respostas = Rx<List<Resposta>>();
+  Rx<List<RespostaUsuario>> respostas = Rx<List<RespostaUsuario>>();
 
   void addOpcaoResposta(OpcaoModel opcao, int index) {
     this.respostas.value[index].opcao = opcao;
@@ -27,13 +27,13 @@ class QuestionarioController extends GetxController {
     var token = await Session.getToken();
     var userInfo = await Session.getUserInfo();
     QuestionarioModel questionario;
-    List<Resposta> respostas = [];
+    List<RespostaUsuario> respostas = [];
     http.get("${Api.address}/questionarios/$questionarioId", headers: token).then((res) {
       if (res.statusCode == 200) {
         questionario = new QuestionarioModel.fromJson(json.decode(res.body));
 
         for (var pergunta in questionario.perguntas) {
-          respostas.add(new Resposta(
+          respostas.add(new RespostaUsuario(
             pergunta: pergunta.id,
             usuario: userInfo['id'],
             opcao: null,
@@ -72,7 +72,7 @@ class QuestionarioController extends GetxController {
     ).then((res) {
       if (res.statusCode == 201) {
         Snack.showSnack(title: "Sucesso", message: "Resposta enviada!");
-        List<Resposta> respostas = this.respostas.value;
+        List<RespostaUsuario> respostas = this.respostas.value;
         respostas.map((r) => r.opcao = null);
         this.respostas.value = respostas;
         update();
