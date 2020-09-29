@@ -7,6 +7,8 @@ import '../views/perfil.v.dart';
 import '../utils/session.dart';
 import '../models/resposta.m.dart';
 import '../components/resposta_card.dart';
+import 'package:google_fonts/google_fonts.dart';
+import './pesquisa.v.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -127,7 +129,7 @@ class _HomeViewState extends State<HomeView> {
                                     color: Colors.black.withOpacity(0.3),
                                   )
                                 ]),
-                            height: 200,
+                            height: 180,
                             child: Material(
                               color: Colors.transparent,
                               child: Column(
@@ -136,7 +138,8 @@ class _HomeViewState extends State<HomeView> {
                                   Opacity(
                                     opacity: 0.82,
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Text('Questionários', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                                      Text('Questionários',
+                                          style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
                                       Row(children: [
                                         Padding(
                                             padding: EdgeInsets.symmetric(vertical: 8),
@@ -148,22 +151,29 @@ class _HomeViewState extends State<HomeView> {
                                             padding: EdgeInsets.symmetric(vertical: 8),
                                             child: IconButton(
                                               icon: Icon(Icons.search),
-                                              onPressed: () {},
+                                              onPressed: () => Get.to(PesquisaView(), transition: Transition.downToUp),
                                             ))
                                       ]),
                                     ]),
                                   ),
                                   ctr.questionarios.value != null
-                                      ? Expanded(
-                                          child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: ctr.questionarios.value.length,
-                                          itemBuilder: (_, index) {
-                                            QuestionarioModel questionario = ctr.questionarios.value[index];
-                                            return QuestionarioCard(questionario: questionario);
-                                          },
-                                        ))
-                                      : SizedBox()
+                                      ? ctr.questionarios.value.length > 0
+                                          ? Expanded(
+                                              child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: ctr.questionarios.value.length,
+                                              itemBuilder: (_, index) {
+                                                QuestionarioModel questionario = ctr.questionarios.value[index];
+                                                return !questionario.respondido
+                                                    ? QuestionarioCard(questionario: questionario)
+                                                    : SizedBox();
+                                              },
+                                            ))
+                                          : Text('Nenhum questionário foi encontrado')
+                                      : Padding(
+                                          padding: const EdgeInsets.only(top: 15),
+                                          child: LinearProgressIndicator(),
+                                        )
                                 ],
                               ),
                             ))),
@@ -197,14 +207,13 @@ class _HomeViewState extends State<HomeView> {
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                       Text(
                                         'Suas respostas',
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                        style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18),
                                       ),
                                       Padding(
                                           padding: EdgeInsets.symmetric(vertical: 8),
                                           child: IconButton(
-                                            icon: Icon(Icons.search),
-                                            onPressed: () {},
-                                          ))
+                                              icon: Icon(Icons.search),
+                                              onPressed: () => Get.to(PesquisaView(), transition: Transition.downToUp)))
                                     ]),
                                   ),
                                   ctr.respostas.value != null
@@ -219,7 +228,10 @@ class _HomeViewState extends State<HomeView> {
                                               },
                                             ))
                                           : Text('Você ainda não respondeu a nenhum questionário.')
-                                      : CircularProgressIndicator()
+                                      : Padding(
+                                          padding: const EdgeInsets.only(top: 15),
+                                          child: Center(child: CircularProgressIndicator()),
+                                        )
                                 ],
                               ),
                             ))),

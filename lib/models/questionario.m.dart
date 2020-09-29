@@ -14,12 +14,14 @@ class QuestionarioModel {
   EmpresaModel empresa;
   Color cor;
   List<PerguntaModel> perguntas;
+  bool respondido;
 
   QuestionarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     titulo = json['titulo'];
     empresa = json['empresa'] != null ? EmpresaModel.fromJson(json['empresa']) : null;
     cor = Color(int.parse(json['cor'].toString().replaceFirst('#', '0xff')));
+    respondido = json['respondido'];
 
     if (json['perguntas'] != null) {
       List<PerguntaModel> perguntas = [];

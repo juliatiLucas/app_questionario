@@ -5,13 +5,21 @@ class RecInput extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final Function(String) onChanged;
+  final bool bottomPadding;
+  final String hintText;
 
-  RecInput({this.controller, this.obscureText = false, this.keyboardType = TextInputType.text, this.onChanged});
+  RecInput(
+      {this.controller,
+      this.obscureText = false,
+      this.keyboardType = TextInputType.text,
+      this.onChanged,
+      this.hintText,
+      this.bottomPadding = true});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 3, bottom: 15),
+      padding: EdgeInsets.only(top: 3, bottom: bottomPadding ? 15 : 0),
       child: TextField(
         keyboardType: keyboardType,
         controller: controller,
@@ -20,8 +28,9 @@ class RecInput extends StatelessWidget {
         decoration: InputDecoration(
             fillColor: Colors.grey[200],
             filled: true,
+            hintText: hintText,
             border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 10)),
+            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10)),
       ),
     );
   }

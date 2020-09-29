@@ -14,8 +14,6 @@ class QuestionarioView extends StatefulWidget {
 }
 
 class _QuestionarioViewState extends State<QuestionarioView> {
-  final QuestionarioController _questionarioController = Get.put(QuestionarioController());
-
   int getIndex(List<PerguntaModel> perguntas, PerguntaModel pergunta) {
     int index = perguntas.indexOf(pergunta);
     return index;
@@ -54,22 +52,32 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                   style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                               ]),
-                              Row(children: [
-                                IconButton(
-                                  color: Colors.white,
-                                  icon: Icon(Icons.check),
-                                  onPressed: ctr.enviarResposta,
-                                )
-                              ])
+                              ctr.respostas.value.length > 0
+                                  ? Row(children: [
+                                      IconButton(
+                                        color: Colors.white,
+                                        icon: Icon(Icons.check),
+                                        onPressed: ctr.enviarResposta,
+                                      )
+                                    ])
+                                  : SizedBox()
                             ]),
                           ),
                           SizedBox(height: 20),
-                          ...ctr.questionario.value.perguntas.map(
-                            (PerguntaModel pergunta) => PerguntaCard(
-                                pergunta: pergunta,
-                                controller: ctr,
-                                index: this.getIndex(ctr.questionario.value.perguntas, pergunta)),
-                          )
+                          ...ctr.questionario.value.perguntas.length > 0
+                              ? ctr.questionario.value.perguntas.map(
+                                  (PerguntaModel pergunta) => PerguntaCard(
+                                      pergunta: pergunta,
+                                      controller: ctr,
+                                      index: this.getIndex(ctr.questionario.value.perguntas, pergunta)),
+                                )
+                              : [
+                                  SizedBox(
+                                      child: Text(
+                                    'Esse questionário não tem perguntas ainda.',
+                                    style: TextStyle(color: Colors.white, fontSize: 16),
+                                  ))
+                                ]
                         ],
                       ),
                     )),

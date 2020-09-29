@@ -38,7 +38,6 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void restartApp() {
-    print('a');
     setState(() {
       key = UniqueKey();
     });

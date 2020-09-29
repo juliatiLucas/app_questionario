@@ -1,4 +1,3 @@
-import './questionario.m.dart';
 import 'dart:convert' show utf8;
 
 String utf8convert(String text) {

@@ -33,7 +33,12 @@ class HomeController extends GetxController {
     var token = await Session.getToken();
     var userInfo = await Session.getUserInfo();
 
-    http.get("${Api.address}/respostas/usuarios/${userInfo['id']}", headers: token).then((res) {
+    http
+        .get(
+      "${Api.address}/respostas/usuarios/${userInfo['id']}",
+      headers: token,
+    )
+        .then((res) {
       if (res.statusCode == 200) {
         for (var r in json.decode(res.body)) respostas.add(new RespostaModel.fromJson(r));
 
