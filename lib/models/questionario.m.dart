@@ -21,7 +21,7 @@ class QuestionarioModel {
     titulo = json['titulo'];
     empresa = json['empresa'] != null ? EmpresaModel.fromJson(json['empresa']) : null;
     cor = Color(int.parse(json['cor'].toString().replaceFirst('#', '0xff')));
-    respondido = json['respondido'];
+    respondido = json['respondido'] ?? false;
 
     if (json['perguntas'] != null) {
       List<PerguntaModel> perguntas = [];

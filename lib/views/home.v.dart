@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
             ));
   }
 
-  Future<void> getInfo(BuildContext context, HomeController ctr) async {
+  Future<void> getRespostasEQuestionarios(BuildContext context, HomeController ctr) async {
     ctr.getQuestionarios(context);
     ctr.getRespostas();
   }
@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
         HomeController.to.getRespostas();
       },
       builder: (ctr) => RefreshIndicator(
-          onRefresh: () => this.getInfo(context, ctr),
+          onRefresh: () => this.getRespostasEQuestionarios(context, ctr),
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
               overscroll.disallowGlow();
@@ -118,7 +118,7 @@ class _HomeViewState extends State<HomeView> {
                         padding: EdgeInsets.only(left: 18, right: 18, top: 150, bottom: 30),
                         child: Container(
                             width: size.width,
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+                            padding: EdgeInsets.only(top: 0, bottom: 12, left: 14, right: 14),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -140,23 +140,15 @@ class _HomeViewState extends State<HomeView> {
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                       Text('Questionários',
                                           style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
-                                      Row(children: [
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 8),
-                                            child: IconButton(
-                                              icon: Icon(Icons.filter_list),
-                                              onPressed: () {},
-                                            )),
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 8),
-                                            child: IconButton(
-                                              icon: Icon(Icons.search),
-                                              onPressed: () => Get.to(PesquisaView(), transition: Transition.downToUp),
-                                            ))
-                                      ]),
+                                      Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 8),
+                                          child: IconButton(
+                                            icon: Icon(Icons.search),
+                                            onPressed: () => Get.to(PesquisaView(), transition: Transition.downToUp),
+                                          ))
                                     ]),
                                   ),
-                                  ctr.questionarios.value != null
+                                  !ctr.questionarios.value.isNullOrBlank
                                       ? ctr.questionarios.value.length > 0
                                           ? Expanded(
                                               child: ListView.builder(
@@ -164,9 +156,7 @@ class _HomeViewState extends State<HomeView> {
                                               itemCount: ctr.questionarios.value.length,
                                               itemBuilder: (_, index) {
                                                 QuestionarioModel questionario = ctr.questionarios.value[index];
-                                                return !questionario.respondido
-                                                    ? QuestionarioCard(questionario: questionario)
-                                                    : SizedBox();
+                                                return QuestionarioCard(questionario: questionario);
                                               },
                                             ))
                                           : Text('Nenhum questionário foi encontrado')
@@ -204,19 +194,12 @@ class _HomeViewState extends State<HomeView> {
                                 children: [
                                   Opacity(
                                     opacity: 0.82,
-                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Text(
-                                        'Suas respostas',
-                                        style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18),
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 8),
-                                          child: IconButton(
-                                              icon: Icon(Icons.search),
-                                              onPressed: () => Get.to(PesquisaView(), transition: Transition.downToUp)))
-                                    ]),
+                                    child: Text(
+                                      'Suas respostas',
+                                      style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
                                   ),
-                                  ctr.respostas.value != null
+                                  !ctr.respostas.value.isNullOrBlank
                                       ? ctr.respostas.value.length > 0
                                           ? Expanded(
                                               child: ListView.builder(

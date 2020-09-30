@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/perfil.c.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import '../models/usuario.m.dart';
+import '../controllers/perfil.c.dart';
+import '../models/resposta.m.dart';
+import '../components/resposta_card.dart';
 
 class PerfilView extends StatelessWidget {
   final int userId;
@@ -34,6 +35,7 @@ class PerfilView extends StatelessWidget {
         body: GetBuilder<PerfilController>(
             initState: (_) {
               PerfilController.to.getUserInfo(userId);
+              PerfilController.to.getRespostasUsuario(userId);
             },
             init: Get.put(PerfilController()),
             builder: (ctr) => Container(
@@ -57,7 +59,7 @@ class PerfilView extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                ctr.usuario.value != null
+                                !ctr.usuario.value.isNullOrBlank
                                     ? GestureDetector(
                                         onTap: ctr.usuario.value.self ? () => this.mudarFoto(context) : null,
                                         child: CircleAvatar(
@@ -65,7 +67,7 @@ class PerfilView extends StatelessWidget {
                                           radius: 50,
                                         ))
                                     : SizedBox(),
-                                ctr.usuario.value != null
+                                !ctr.usuario.value.isNullOrBlank
                                     ? Opacity(
                                         opacity: 0.85,
                                         child: Column(children: [
@@ -104,7 +106,18 @@ class PerfilView extends StatelessWidget {
                                         'Respostas do usuário',
                                         style: GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.bold),
                                       ),
-                                      // ListView.builder(itemBuilder: null)
+                                      SizedBox(height: 10),
+                                      if (!ctr.respostas.value.isNullOrBlank)
+                                        Expanded(
+                                          child: ListView.builder(
+                                              itemCount: ctr.respostas.value.length,
+                                              itemBuilder: (_, index) {
+                                                RespostaModel resposta = ctr.respostas.value[index];
+                                                return RespostaCard(resposta: resposta);
+                                              }),
+                                        )
+                                      else
+                                        SizedBox()
                                     ],
                                   ),
                                 ),

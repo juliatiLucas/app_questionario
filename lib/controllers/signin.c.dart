@@ -18,7 +18,10 @@ class SignInController extends GetxController {
     } else if (!this.email.text.contains('@')) {
       Snack.showSnack(title: "Erro", message: "E-mail inválido!");
     } else {
-      Map<String, String> data = {"email": this.email.text, "senha": this.password.text};
+      Map<String, String> data = {
+        "email": this.email.text.trim(),
+        "senha": this.password.text,
+      };
       http.post(
         "${Api.address}/usuarios/login",
         body: json.encode(data),

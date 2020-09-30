@@ -23,7 +23,7 @@ class SignUpController extends GetxController {
       Snack.showSnack(title: "Erro", message: "Telefone inválido!");
     else {
       Map<String, String> data = {
-        "email": this.email.text,
+        "email": this.email.text.trim(),
         "senha": this.password.text,
         "nome": this.name.text,
         "telefone": this.phone.text,

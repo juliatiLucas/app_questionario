@@ -7,6 +7,7 @@ class RecInput extends StatelessWidget {
   final Function(String) onChanged;
   final bool bottomPadding;
   final String hintText;
+  final bool autoFocus;
 
   RecInput(
       {this.controller,
@@ -14,7 +15,8 @@ class RecInput extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.onChanged,
       this.hintText,
-      this.bottomPadding = true});
+      this.bottomPadding = true,
+      this.autoFocus = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class RecInput extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         onChanged: onChanged,
+        autofocus: autoFocus,
         decoration: InputDecoration(
             fillColor: Colors.grey[200],
             filled: true,

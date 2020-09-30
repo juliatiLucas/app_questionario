@@ -12,6 +12,7 @@ class QuestionarioController extends GetxController {
   static QuestionarioController get to => Get.find();
   Rx<QuestionarioModel> questionario = Rx<QuestionarioModel>();
   Rx<List<RespostaUsuario>> respostas = Rx<List<RespostaUsuario>>();
+  Rx<bool> respondido = Rx<bool>(true);
 
   void addOpcaoResposta(OpcaoModel opcao, int index) {
     this.respostas.value[index].opcao = opcao;
@@ -20,6 +21,11 @@ class QuestionarioController extends GetxController {
 
   void addTextoResposta(String resposta, int index) {
     this.respostas.value[index].resposta = resposta;
+    update();
+  }
+
+  void setRespondido(bool value) {
+    this.respondido.value = value;
     update();
   }
 
@@ -42,7 +48,11 @@ class QuestionarioController extends GetxController {
 
         this.respostas.value = respostas;
         this.questionario.value = questionario;
+
         update();
+      } else if (res.statusCode == 400) {
+        print("teste");
+        setRespondido(true);
       }
     });
   }
@@ -76,6 +86,9 @@ class QuestionarioController extends GetxController {
         respostas.map((r) => r.opcao = null);
         this.respostas.value = respostas;
         update();
+        Future.delayed(Duration(milliseconds: 2500), () {
+          Get.back();
+        });
       }
     });
   }

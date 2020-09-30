@@ -45,11 +45,26 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                   onPressed: Navigator.of(context).pop,
                                   color: Colors.white,
                                 ),
-                                Text(
-                                  ctr.questionario.value.titulo.length > 24
-                                      ? ctr.questionario.value.titulo.toString().substring(0, 23) + '...'
-                                      : ctr.questionario.value.titulo,
-                                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ctr.questionario.value.titulo.length > 22
+                                          ? ctr.questionario.value.titulo.toString().substring(0, 21) + '...'
+                                          : ctr.questionario.value.titulo,
+                                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Opacity(
+                                        opacity: 0.8,
+                                        child: Text(
+                                          ctr.questionario.value.empresa.nome,
+                                          style: TextStyle(color: Colors.white, fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ]),
                               ctr.respostas.value.length > 0
@@ -77,12 +92,20 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                     'Esse questionário não tem perguntas ainda.',
                                     style: TextStyle(color: Colors.white, fontSize: 16),
                                   ))
-                                ]
+                                ],
                         ],
                       ),
-                    )),
-              )
-            : Scaffold(body: Center(child: CircularProgressIndicator())),
+                    )))
+            : ctr.respondido.value
+                ? Container(
+                    child: Center(
+                      child: Text(
+                        'Voce ja respondeu a este questionário.',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  )
+                : Scaffold(body: Center(child: CircularProgressIndicator())),
       ),
     );
   }
