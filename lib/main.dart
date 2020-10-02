@@ -37,32 +37,32 @@ class _WrapperState extends State<Wrapper> {
     return auth;
   }
 
-  void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
+  void restartApp() => setState(() => key = UniqueKey());
 
   @override
   Widget build(BuildContext context) {
     return KeyedSubtree(
       key: this.key,
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           body: FutureBuilder(
-        future: this.isAuthenticated(),
-        builder: (_, snapshot) {
-          Widget ret;
+            future: this.isAuthenticated(),
+            builder: (_, snapshot) {
+              Widget ret;
 
-          if (snapshot.connectionState == ConnectionState.waiting)
-            ret = Center(child: Image.asset('assets/quiz-factory-inapp.png', width: 125,));
-          else if (snapshot.connectionState == ConnectionState.done) {
-            ret = snapshot.data ? HomeView() : SignInView();
-          }
+              if (snapshot.connectionState == ConnectionState.waiting)
+                ret = Center(
+                    child: Image.asset(
+                  'assets/quiz-factory-inapp.png',
+                  width: 125,
+                ));
+              else if (snapshot.connectionState == ConnectionState.done) {
+                ret = snapshot.data ? HomeView() : SignInView();
+              }
 
-          return ret;
-        },
-      )),
+              return ret;
+            },
+          )),
     );
   }
 }

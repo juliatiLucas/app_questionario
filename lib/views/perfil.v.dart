@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/perfil.c.dart';
@@ -7,20 +9,79 @@ import '../components/resposta_card.dart';
 
 class PerfilView extends StatelessWidget {
   final int userId;
+  final PerfilController _perfilController = Get.put(PerfilController());
   PerfilView({this.userId});
 
   void mudarFoto(BuildContext context) {
+    final picker = ImagePicker();
+    File file;
+
     showModalBottomSheet(
         context: context,
         builder: (_) => Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              height: 300,
+              color: Colors.transparent,
+              height: !_perfilController.imagem.isNullOrBlank ? 300 : 200,
               child: Column(
                 children: [
-                  Text(
-                    'Mudar foto',
-                    style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.bold),
-                  )
+                  !_perfilController.imagem.isNullOrBlank
+                      ? Expanded(
+                          child:
+                              Container(color: Colors.transparent, child: Image.file(_perfilController.imagem.value)))
+                      : SizedBox(),
+                  Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    height: 200,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          'Mudar foto',
+                          style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 25),
+                        TextButton(
+                            onPressed: () async {
+                              final pickedFile = await picker.getImage(source: ImageSource.gallery);
+                              if (!pickedFile.isNull) file = File(pickedFile?.path);
+                              _perfilController.setImagem(file);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.filter),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Galeria',
+                                    style: TextStyle(fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            )),
+                        TextButton(
+                            onPressed: () async {
+                              final pickedFile = await picker.getImage(source: ImageSource.camera);
+                              if (!pickedFile.isNull) file = File(pickedFile?.path);
+                              _perfilController.setImagem(file);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.camera_alt),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Câmera',
+                                    style: TextStyle(fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ));

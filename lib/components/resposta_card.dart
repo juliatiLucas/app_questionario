@@ -9,8 +9,8 @@ class RespostaCard extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-              contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+              titlePadding: EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+              contentPadding: EdgeInsets.only(top: 5, left: 18, right: 18, bottom: 16),
               title: Row(
                 children: [
                   Container(
@@ -31,8 +31,7 @@ class RespostaCard extends StatelessWidget {
                   children: [
                     Opacity(
                         opacity: 0.8,
-                        child: Text(
-                            "R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
+                        child: Text("R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
                             style: TextStyle(fontSize: 18))),
                     Expanded(child: Container()),
                     Align(alignment: Alignment.bottomRight, child: Text(resposta.data)),

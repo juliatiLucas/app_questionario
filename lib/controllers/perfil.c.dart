@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../utils/session.dart';
@@ -10,6 +11,12 @@ class PerfilController extends GetxController {
   static PerfilController get to => Get.find();
   Rx<UsuarioModel> usuario = Rx<UsuarioModel>();
   Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
+  Rx<File> imagem = Rx<File>();
+
+  void setImagem(File file) {
+    imagem.value = file;
+    update();
+  }
 
   void getUserInfo(int userId) async {
     UsuarioModel usuario;
@@ -37,4 +44,6 @@ class PerfilController extends GetxController {
       }
     });
   }
+
+  void atualizarUsuario() {}
 }
