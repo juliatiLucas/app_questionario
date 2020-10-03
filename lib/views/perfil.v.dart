@@ -15,74 +15,95 @@ class PerfilView extends StatelessWidget {
   void mudarFoto(BuildContext context) {
     final picker = ImagePicker();
     File file;
+    Size size = MediaQuery.of(context).size;
 
     showModalBottomSheet(
         context: context,
-        builder: (_) => Container(
-              color: Colors.transparent,
-              height: !_perfilController.imagem.isNullOrBlank ? 300 : 200,
-              child: Column(
-                children: [
-                  !_perfilController.imagem.isNullOrBlank
-                      ? Expanded(
-                          child:
-                              Container(color: Colors.transparent, child: Image.file(_perfilController.imagem.value)))
-                      : SizedBox(),
-                  Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    height: 200,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Text(
-                          'Mudar foto',
-                          style: GoogleFonts.dmSans(fontSize: 20, fontWeight: FontWeight.bold),
+        backgroundColor: Colors.transparent,
+        builder: (_) => GetBuilder<PerfilController>(
+              builder: (ctr) => Container(
+                width: size.width,
+                height: !ctr.imagem.isNullOrBlank ? 395 : 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    !ctr.imagem.value.isNullOrBlank
+                        ? Container(
+                            height: 150,
+                            child: CircleAvatar(
+                              radius: 75,
+                              backgroundImage: FileImage(ctr.imagem.value),
+                            ),
+                          )
+                        : SizedBox(),
+                    SizedBox(height: 20),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 15),
+                            FlatButton(
+                                onPressed: () async {
+                                  final pickedFile = await picker.getImage(source: ImageSource.gallery);
+                                  if (!pickedFile.isNull) file = File(pickedFile?.path);
+                                  ctr.setImagem(file);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.filter),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Galeria',
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            FlatButton(
+                                onPressed: () async {
+                                  final pickedFile = await picker.getImage(source: ImageSource.camera);
+                                  if (!pickedFile.isNull) file = File(pickedFile?.path);
+                                  ctr.setImagem(file);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.camera_alt),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Câmera',
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 18),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                      FlatButton(child: Text('CANCELAR'), onPressed: Get.back),
+                                      FlatButton(
+                                          child: Text('CONCLUÍDO'),
+                                          onPressed: ctr.imagem.value.isNull ? null : ctr.atualizarImagem)
+                                    ])),
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                          ],
                         ),
-                        SizedBox(height: 25),
-                        TextButton(
-                            onPressed: () async {
-                              final pickedFile = await picker.getImage(source: ImageSource.gallery);
-                              if (!pickedFile.isNull) file = File(pickedFile?.path);
-                              _perfilController.setImagem(file);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.filter),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'Galeria',
-                                    style: TextStyle(fontSize: 20),
-                                  )
-                                ],
-                              ),
-                            )),
-                        TextButton(
-                            onPressed: () async {
-                              final pickedFile = await picker.getImage(source: ImageSource.camera);
-                              if (!pickedFile.isNull) file = File(pickedFile?.path);
-                              _perfilController.setImagem(file);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.camera_alt),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'Câmera',
-                                    style: TextStyle(fontSize: 20),
-                                  )
-                                ],
-                              ),
-                            )),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ));
   }
@@ -118,15 +139,27 @@ class PerfilView extends StatelessWidget {
                         Container(
                           child: Center(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 !ctr.usuario.value.isNullOrBlank
-                                    ? GestureDetector(
-                                        onTap: ctr.usuario.value.self ? () => this.mudarFoto(context) : null,
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.purple.withOpacity(0.4),
-                                          radius: 50,
-                                        ))
+                                    ? ctr.usuario.value.imagem.isNullOrBlank
+                                        ? GestureDetector(
+                                            onTap: ctr.usuario.value.self ? () => this.mudarFoto(context) : null,
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.purple.withOpacity(0.4),
+                                              radius: 50,
+                                            ))
+                                        : Container(
+                                            height: 100,
+                                            width: 100,
+                                            child: GestureDetector(
+                                                onTap: ctr.usuario.value.self ? () => this.mudarFoto(context) : null,
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.purple.withOpacity(0.4),
+                                                  radius: 50,
+                                                  backgroundImage: NetworkImage(ctr.usuario.value.imagem),
+                                                )),
+                                          )
                                     : SizedBox(),
                                 !ctr.usuario.value.isNullOrBlank
                                     ? Opacity(
@@ -134,8 +167,7 @@ class PerfilView extends StatelessWidget {
                                         child: Column(children: [
                                           Text(
                                             ctr.usuario.value.nome,
-                                            style: TextStyle(
-                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             ctr.usuario.value.email,

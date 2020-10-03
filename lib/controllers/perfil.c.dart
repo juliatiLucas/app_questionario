@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as httpParser;
 import '../utils/session.dart';
 import '../utils/api.dart';
+import 'package:dio/dio.dart';
 import '../models/usuario.m.dart';
 import '../models/resposta.m.dart';
 
 class PerfilController extends GetxController {
+  Dio dio = Dio();
   static PerfilController get to => Get.find();
   Rx<UsuarioModel> usuario = Rx<UsuarioModel>();
   Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
@@ -45,5 +48,22 @@ class PerfilController extends GetxController {
     });
   }
 
-  void atualizarUsuario() {}
+  void atualizarImagem() async {
+    var token = await Session.getToken();
+    var userInfo = await Session.getUserInfo();
+
+    String ext = this.imagem.value.path.split('.').last;
+    FormData data = new FormData.fromMap({
+      "imagem": await MultipartFile.fromFile(this.imagem.value.path,
+          filename: DateTime.now().millisecondsSinceEpoch.toString() + ".$ext",
+          contentType: httpParser.MediaType('image', (ext == 'jpg' || ext == 'jpeg') ? 'jpeg' : 'png'))
+    });
+
+    dio.put("${Api.address}/usuarios/${userInfo['id']}", data: data, options: Options(headers: token)).then((res) {
+      if (res.statusCode == 200) {
+        Get.back();
+        this.getUserInfo(userInfo['id']);
+      }
+    });
+  }
 }

@@ -9,11 +9,13 @@ class UsuarioModel {
   int id;
   String nome;
   String email;
+  String imagem;
   bool self;
 
   UsuarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = utf8convert(json['nome']);
+    imagem = json['imagem'] ?? null;
     email = json['email'];
   }
 
