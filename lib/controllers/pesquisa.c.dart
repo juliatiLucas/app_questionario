@@ -28,7 +28,9 @@ class PesquisaController extends GetxController {
     )
         .then((res) {
       if (res.statusCode == 200) {
+        print(res.body);
         for (var q in json.decode(res.body)) questionarios.add(new QuestionarioModel.fromJson(q));
+        
         this.questionarios.value = questionarios;
         update();
       }

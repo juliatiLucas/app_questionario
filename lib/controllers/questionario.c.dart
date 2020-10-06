@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../utils/session.dart';
@@ -7,12 +8,14 @@ import '../components/snack.dart';
 import '../models/questionario.m.dart';
 import '../models/resposta_usuario.dart';
 import '../models/opcao.m.dart';
+import './home.c.dart';
 
 class QuestionarioController extends GetxController {
   static QuestionarioController get to => Get.find();
+  HomeController _homeController = Get.put(HomeController());
   Rx<QuestionarioModel> questionario = Rx<QuestionarioModel>();
   Rx<List<RespostaUsuario>> respostas = Rx<List<RespostaUsuario>>();
-  Rx<bool> respondido = Rx<bool>(true);
+  Rx<bool> respondido = Rx<bool>(false);
 
   void addOpcaoResposta(OpcaoModel opcao, int index) {
     this.respostas.value[index].opcao = opcao;
@@ -51,13 +54,12 @@ class QuestionarioController extends GetxController {
 
         update();
       } else if (res.statusCode == 400) {
-        print("teste");
         setRespondido(true);
       }
     });
   }
 
-  void enviarResposta() async {
+  void enviarResposta(BuildContext context) async {
     var token = await Session.getToken();
     List<Map<String, String>> data = [];
 
@@ -86,6 +88,8 @@ class QuestionarioController extends GetxController {
         respostas.map((r) => r.opcao = null);
         this.respostas.value = respostas;
         update();
+        _homeController.getQuestionarios(context);
+        _homeController.getRespostas();
         Future.delayed(Duration(milliseconds: 2500), () {
           Get.back();
         });

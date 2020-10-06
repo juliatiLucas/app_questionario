@@ -138,8 +138,7 @@ class _HomeViewState extends State<HomeView> {
                                   Opacity(
                                     opacity: 0.82,
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Text('Questionários',
-                                          style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
+                                      Text('Questionários', style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
                                       Padding(
                                           padding: EdgeInsets.symmetric(vertical: 8),
                                           child: IconButton(
@@ -210,7 +209,9 @@ class _HomeViewState extends State<HomeView> {
                                                 return RespostaCard(resposta: resposta);
                                               },
                                             ))
-                                          : Text('Você ainda não respondeu a nenhum questionário.')
+                                          : Padding(
+                                              padding: EdgeInsets.only(top: 15),
+                                              child: Center(child: Text('Você ainda não respondeu a nenhum questionário.')))
                                       : Padding(
                                           padding: const EdgeInsets.only(top: 15),
                                           child: Center(child: CircularProgressIndicator()),
