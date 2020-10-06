@@ -67,5 +67,6 @@ class PerfilController extends GetxController {
         this.getUserInfo(userInfo['id']);
       }
     });
+    this.setImagem(null);
   }
 }

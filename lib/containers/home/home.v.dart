@@ -82,34 +82,37 @@ class _HomeViewState extends State<HomeView> {
                         height: 260,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SafeArea(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                  Image.asset(
-                                    'assets/quiz-factory-inapp.png',
-                                    width: 50,
-                                  ),
-                                  // Text('Quiz Factory',
-                                  //     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-                                  PopupMenuButton<String>(
-                                    onSelected: this.optionSelected,
-                                    icon: Icon(Icons.more_vert, color: Colors.white),
-                                    itemBuilder: (_) => [
-                                      const PopupMenuItem<String>(
-                                        value: "perfil",
-                                        child: Text('Perfil'),
-                                      ),
-                                      const PopupMenuItem<String>(
-                                        value: "sair",
-                                        child: Text('Sair'),
-                                      ),
-                                    ],
-                                  )
-                                ]),
-                                SizedBox(height: 120),
-                              ],
+                          child: Material(
+                            color: Colors.transparent,
+                            child: SafeArea(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                    Image.asset(
+                                      'assets/quiz-factory-inapp.png',
+                                      width: 50,
+                                    ),
+                                    // Text('Quiz Factory',
+                                    //     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                                    PopupMenuButton<String>(
+                                      onSelected: this.optionSelected,
+                                      icon: Icon(Icons.more_vert, color: Colors.white),
+                                      itemBuilder: (_) => [
+                                        const PopupMenuItem<String>(
+                                          value: "perfil",
+                                          child: Text('Perfil'),
+                                        ),
+                                        const PopupMenuItem<String>(
+                                          value: "sair",
+                                          child: Text('Sair'),
+                                        ),
+                                      ],
+                                    )
+                                  ]),
+                                  SizedBox(height: 120),
+                                ],
+                              ),
                             ),
                           ),
                         )),

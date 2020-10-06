@@ -42,64 +42,71 @@ class PerfilView extends StatelessWidget {
                       flex: 1,
                       child: Container(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 15),
-                            FlatButton(
-                                onPressed: () async {
-                                  final pickedFile = await picker.getImage(source: ImageSource.gallery);
-                                  if (!pickedFile.isNull) file = File(pickedFile?.path);
-                                  ctr.setImagem(file);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.filter),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'Galeria',
-                                        style: TextStyle(fontSize: 20),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                            FlatButton(
-                                onPressed: () async {
-                                  final pickedFile = await picker.getImage(source: ImageSource.camera);
-                                  if (!pickedFile.isNull) file = File(pickedFile?.path);
-                                  ctr.setImagem(file);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.camera_alt),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'Câmera',
-                                        style: TextStyle(fontSize: 20),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                            Expanded(
-                              child: Align(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Align(
                                 alignment: Alignment.bottomRight,
                                 child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 18),
-                                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                                      FlatButton(child: Text('CANCELAR'), onPressed: Get.back),
-                                      FlatButton(
-                                          child: Text('CONCLUÍDO'),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      IconButton(
+                                          icon: Icon(Icons.close),
+                                          onPressed: () {
+                                            ctr.setImagem(null);
+                                            Get.back();
+                                          }),
+                                      IconButton(
+                                          icon: Icon(Icons.check),
                                           onPressed: ctr.imagem.value.isNull ? null : ctr.atualizarImagem)
                                     ])),
                               ),
-                            ),
-                            SizedBox(height: 30),
-                          ],
+                              SizedBox(height: 20),
+                              FlatButton(
+                                  onPressed: () async {
+                                    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+                                    if (!pickedFile.isNull) file = File(pickedFile?.path);
+                                    ctr.setImagem(file);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.filter, color: Theme.of(context).primaryColor),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Galeria',
+                                          style: TextStyle(fontSize: 20, color: Theme.of(context).primaryColor),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              FlatButton(
+                                  onPressed: () async {
+                                    final pickedFile = await picker.getImage(source: ImageSource.camera);
+                                    if (!pickedFile.isNull) file = File(pickedFile?.path);
+                                    ctr.setImagem(file);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.camera_alt, color: Theme.of(context).primaryColor),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Câmera',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                            ],
+                          ),
                         ),
                       ),
                     ),
