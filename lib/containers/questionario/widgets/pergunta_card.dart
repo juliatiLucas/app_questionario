@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
+import '../../../core/rec_input.dart';
+import '../controllers/questionario.c.dart';
 import '../models/opcao.m.dart';
 import '../models/pergunta.m.dart';
-import './rec_input.dart';
-import '../controllers/questionario.c.dart';
 
 class PerguntaCard extends StatelessWidget {
   final PerguntaModel pergunta;

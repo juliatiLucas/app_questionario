@@ -1,33 +1,41 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import '../utils/session.dart';
-import '../utils/api.dart';
-import '../components/snack.dart';
-import '../views/home.v.dart';
 
-class SignInController extends GetxController {
+import '../../../core/snack.dart';
+import '../../../utils/api.dart';
+import '../../../utils/session.dart';
+import '../../home/home.v.dart';
+
+class SignUpController extends GetxController {
+  TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController phone = TextEditingController();
 
-  void login(BuildContext context) async {
-    if (this.email.text.isEmpty || this.password.text.isEmpty) {
-      Snack.showSnack(title: "Erro", message: "E-mail e senha não podem ser nulos!");
-    } else if (!this.email.text.contains('@')) {
+  void signUp(BuildContext context) {
+    if (this.name.text.isEmpty || this.email.text.isEmpty || this.password.text.isEmpty || this.phone.text.isEmpty)
+      Snack.showSnack(title: "Erro", message: "Preencha todos os campos!");
+    else if (!this.email.text.contains('@'))
       Snack.showSnack(title: "Erro", message: "E-mail inválido!");
-    } else {
+    else if (this.phone.text.length != 11)
+      Snack.showSnack(title: "Erro", message: "Telefone inválido!");
+    else {
       Map<String, String> data = {
         "email": this.email.text.trim(),
         "senha": this.password.text,
+        "nome": this.name.text,
+        "telefone": this.phone.text,
       };
       http.post(
-        "${Api.address}/usuarios/login",
+        "${Api.address}/usuarios",
         body: json.encode(data),
         headers: {"Content-Type": "application/json"},
       ).then((res) async {
-        if (res.statusCode == 200) {
+        if (res.statusCode == 201) {
           this.email.text = "";
           this.password.text = "";
 
@@ -37,9 +45,7 @@ class SignInController extends GetxController {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeView()), (route) => false);
         } else if (res.statusCode == 400) {
           var erro = json.decode(res.body)['error'];
-          if (erro == "usuario_nao_existe")
-            Snack.showSnack(title: "Erro", message: "Usuário não encontrado!");
-          else if (erro == "senha_incorreta") Snack.showSnack(title: "Erro", message: "Senha incorreta!");
+          if (erro == "email_em_uso") Snack.showSnack(title: "Erro", message: "E-mail já cadastrado!");
         }
       });
     }

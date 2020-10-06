@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'views/home.v.dart';
-import 'views/signin.v.dart';
 import './utils/session.dart';
+import 'containers/home/home.v.dart';
+import 'containers/login/signin.v.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -16,10 +16,6 @@ void main() {
 }
 
 class Wrapper extends StatefulWidget {
-  Wrapper({this.child});
-
-  final Widget child;
-
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_WrapperState>().restartApp();
   }

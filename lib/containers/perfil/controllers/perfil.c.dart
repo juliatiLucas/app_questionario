@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as httpParser;
-import '../utils/session.dart';
-import '../utils/api.dart';
-import 'package:dio/dio.dart';
+
+import '../../../utils/api.dart';
+import '../../../utils/session.dart';
+import '../../questionario/models/resposta.m.dart';
 import '../models/usuario.m.dart';
-import '../models/resposta.m.dart';
 
 class PerfilController extends GetxController {
   Dio dio = Dio();

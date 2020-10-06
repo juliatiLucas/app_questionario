@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../models/questionario.m.dart';
-import '../views/questionario.v.dart';
+import '../questionario.v.dart';
 
 class QuestionarioCard extends StatelessWidget {
   final QuestionarioModel questionario;

@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../utils/api.dart';
-import '../utils/session.dart';
-import '../views/signin.v.dart';
-import '../models/questionario.m.dart';
-import '../models/resposta.m.dart';
+import '../../../utils/api.dart';
+import '../../../utils/session.dart';
+import '../../login/signin.v.dart';
+import '../../questionario/models/questionario.m.dart';
+import '../../questionario/models/resposta.m.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
