@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as httpParser;
 
-import '../../../utils/api.dart';
-import '../../../utils/session.dart';
+import '../../../core/utils/api.dart';
+import '../../../core/utils/session.dart';
 import '../../questionario/models/resposta.m.dart';
 import '../models/usuario.m.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/rec_input.dart';
+import '../../../core/components/rec_input.dart';
 import '../controllers/questionario.c.dart';
 import '../models/opcao.m.dart';
 import '../models/pergunta.m.dart';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import './utils/session.dart';
+
 import 'containers/home/home.v.dart';
 import 'containers/login/signin.v.dart';
+import 'core/utils/session.dart';
 
 void main() {
   runApp(GetMaterialApp(

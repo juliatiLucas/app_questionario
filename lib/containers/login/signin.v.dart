@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import './signup.v.dart';
-import '../../core/rec_input.dart';
+import '../../core/components/rec_input.dart';
 import 'controllers/signin.c.dart';
 
 class SignInView extends StatelessWidget {

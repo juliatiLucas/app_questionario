@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../core/rec_input.dart';
+import '../../core/components/rec_input.dart';
 import '../questionario/models/questionario.m.dart';
 import '../questionario/widgets/questionario_card.dart';
 import 'controllers/pesquisa.c.dart';

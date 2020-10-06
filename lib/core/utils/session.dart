@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../main.dart';
+import '../../main.dart';
 
 class Session {
   static Future<Map<String, dynamic>> getUserInfo() async {

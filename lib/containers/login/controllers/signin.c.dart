@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../core/snack.dart';
-import '../../../utils/api.dart';
-import '../../../utils/session.dart';
+import '../../../core/components/snack.dart';
+import '../../../core/utils/api.dart';
+import '../../../core/utils/session.dart';
 import '../../home/home.v.dart';
 
 class SignInController extends GetxController {

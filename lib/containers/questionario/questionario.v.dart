@@ -72,7 +72,7 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                       IconButton(
                                         color: Colors.white,
                                         icon: Icon(Icons.check),
-                                        onPressed: ctr.enviarResposta,
+                                        onPressed: () => ctr.enviarResposta(context),
                                       )
                                     ])
                                   : SizedBox()

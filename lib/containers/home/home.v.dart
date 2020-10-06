@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/session.dart';
+import '../../core/utils/session.dart';
 import '../perfil/perfil.v.dart';
 import '../pesquisa/pesquisa.v.dart';
 import '../questionario/models/questionario.m.dart';
@@ -211,7 +211,10 @@ class _HomeViewState extends State<HomeView> {
                                                 return RespostaCard(resposta: resposta);
                                               },
                                             ))
-                                          : Text('Você ainda não respondeu a nenhum questionário.')
+                                          : Padding(
+                                              padding: EdgeInsets.only(top: 15),
+                                              child: Center(
+                                                  child: Text('Você ainda não respondeu a nenhum questionário.')))
                                       : Padding(
                                           padding: const EdgeInsets.only(top: 15),
                                           child: Center(child: CircularProgressIndicator()),

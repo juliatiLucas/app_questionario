@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_factory/containers/perfil/models/usuario.m.dart';
 import './empresa.m.dart';
 import './pergunta.m.dart';
-import 'dart:convert' show utf8;
-
-String utf8convert(String text) {
-  List<int> bytes = text.toString().codeUnits;
-  return utf8.decode(bytes);
-}
 
 class QuestionarioModel {
   int id;
@@ -18,7 +13,7 @@ class QuestionarioModel {
 
   QuestionarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    titulo = json['titulo'];
+    titulo = utf8convert(json['titulo']);
     empresa = json['empresa'] != null ? EmpresaModel.fromJson(json['empresa']) : null;
     cor = Color(int.parse(json['cor'].toString().replaceFirst('#', '0xff')));
     respondido = json['respondido'] ?? false;
