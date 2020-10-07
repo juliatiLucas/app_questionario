@@ -7,14 +7,10 @@ import 'package:http/http.dart' as http;
 import '../../../core/utils/api.dart';
 import '../../../core/utils/session.dart';
 import '../../questionario/models/questionario.m.dart';
-import '../../questionario/models/resposta.m.dart';
 
 class PesquisaController extends GetxController {
   TextEditingController termo = TextEditingController();
   Rx<List<QuestionarioModel>> questionarios = Rx<List<QuestionarioModel>>();
-  Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
-
-  void getRespostas() {}
 
   void getQuestionarios() async {
     if (this.termo.text.isEmpty) return;

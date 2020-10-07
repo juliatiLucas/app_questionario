@@ -32,7 +32,7 @@ class QuestionarioCard extends StatelessWidget {
                 Opacity(
                   opacity: 0.8,
                   child: Text(
-                    "Empresa: ${questionario?.empresa?.nome}",
+                    !questionario.empresa.isNullOrBlank ? "Empresa: ${questionario.empresa.nome}" : '',
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),

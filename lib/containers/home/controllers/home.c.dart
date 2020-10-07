@@ -1,10 +1,13 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
 import '../../../core/utils/api.dart';
 import '../../../core/utils/session.dart';
 import '../../login/signin.v.dart';
+import '../../questionario/models/empresa.m.dart';
 import '../../questionario/models/questionario.m.dart';
 import '../../questionario/models/resposta.m.dart';
 
@@ -12,6 +15,7 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
   Rx<List<QuestionarioModel>> questionarios = Rx<List<QuestionarioModel>>();
   Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
+  Rx<List<EmpresaModel>> empresas = Rx<List<EmpresaModel>>();
 
   Future<void> getQuestionarios(BuildContext context) async {
     List<QuestionarioModel> questionarios = [];
@@ -23,6 +27,7 @@ class HomeController extends GetxController {
         for (var q in json.decode(res.body)) questionarios.add(new QuestionarioModel.fromJson(q));
 
         this.questionarios.value = questionarios;
+
         update();
       }
     });
@@ -44,6 +49,18 @@ class HomeController extends GetxController {
 
         this.respostas.value = respostas;
 
+        update();
+      }
+    });
+  }
+
+  Future<void> getEmpresas() async {
+    List<EmpresaModel> empresas = [];
+    var token = await Session.getToken();
+    http.get("${Api.address}/empresas", headers: token).then((res) {
+      if (res.statusCode == 200) {
+        for (var e in json.decode(res.body)) empresas.add(new EmpresaModel.fromJson(e));
+        this.empresas.value = empresas;
         update();
       }
     });

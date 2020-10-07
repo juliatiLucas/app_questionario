@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../core/components/rec_input.dart';
 import '../questionario/models/questionario.m.dart';
 import '../questionario/widgets/questionario_card.dart';
 import 'controllers/pesquisa.c.dart';
@@ -25,11 +24,14 @@ class PesquisaView extends StatelessWidget {
                         color: Colors.black,
                       ),
                       Expanded(
-                        child: RecInput(
+                        child: TextFormField(
                             controller: ctr.termo,
-                            autoFocus: true,
-                            bottomPadding: false,
-                            hintText: "Pesquisar questionário"),
+                            onFieldSubmitted: (String value) => ctr.getQuestionarios(),
+                            decoration: InputDecoration(
+                                fillColor: Colors.grey[200],
+                                filled: true,
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10))),
                       ),
                       IconButton(
                         icon: Icon(Icons.search),
@@ -39,16 +41,15 @@ class PesquisaView extends StatelessWidget {
                     ],
                   ),
                 ),
-                !ctr.questionarios.value.isNullOrBlank
-                    ? Expanded(
-                        child: ListView.builder(
-                            itemCount: ctr.questionarios.value.length,
-                            itemBuilder: (_, index) {
-                              QuestionarioModel questionario = ctr.questionarios.value[index];
-                              return QuestionarioCard(questionario: questionario);
-                            }),
-                      )
-                    : SizedBox()
+                if (!ctr.questionarios.value.isNullOrBlank)
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: ctr.questionarios.value.length,
+                        itemBuilder: (_, index) {
+                          QuestionarioModel questionario = ctr.questionarios.value[index];
+                          return QuestionarioCard(questionario: questionario);
+                        }),
+                  )
               ],
             )),
       ),
