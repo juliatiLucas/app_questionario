@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../../../core/utils/api.dart';
 import '../../../core/utils/session.dart';
+import '../../empresa/models/empresa.m.dart';
 import '../../login/signin.v.dart';
-import '../../questionario/models/empresa.m.dart';
 import '../../questionario/models/questionario.m.dart';
 import '../../questionario/models/resposta.m.dart';
 

@@ -6,14 +6,15 @@ import '../questionario.v.dart';
 
 class QuestionarioCard extends StatelessWidget {
   final QuestionarioModel questionario;
-  QuestionarioCard({this.questionario});
+  final bool expanded;
+  QuestionarioCard({this.questionario, this.expanded = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         decoration: BoxDecoration(color: questionario.cor, borderRadius: BorderRadius.all(Radius.circular(4))),
-        width: 200,
+        width: expanded ? MediaQuery.of(context).size.width : 200,
         child: Material(
           color: !questionario.respondido ? Colors.transparent : Colors.black.withOpacity(0.22),
           child: InkWell(

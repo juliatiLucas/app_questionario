@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/utils/session.dart';
+import '../empresa/widgets/empresa_page.dart';
 import '../perfil/perfil.v.dart';
 import '../pesquisa/pesquisa.v.dart';
-import '../questionario/models/empresa.m.dart';
 import '../questionario/models/questionario.m.dart';
 import '../questionario/models/resposta.m.dart';
 import '../questionario/widgets/questionario_card.dart';
 import '../questionario/widgets/resposta_card.dart';
 import 'controllers/home.c.dart';
-import 'widgets/empresa_card.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -100,8 +99,6 @@ class _HomeViewState extends State<HomeView> {
                                       'assets/quiz-factory-inapp.png',
                                       width: 50,
                                     ),
-                                    // Text('Quiz Factory',
-                                    //     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                                     PopupMenuButton<String>(
                                       onSelected: this.optionSelected,
                                       icon: Icon(Icons.more_vert, color: Colors.white),
@@ -126,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Positioned(
                     child: Padding(
-                        padding: EdgeInsets.only(left: 18, right: 18, top: 150, bottom: 30),
+                        padding: EdgeInsets.only(left: 18, right: 18, top: 125, bottom: 30),
                         child: Column(
                           children: [
                             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -250,8 +247,9 @@ class _HomeViewState extends State<HomeView> {
                                                             : Padding(
                                                                 padding: EdgeInsets.only(top: 15),
                                                                 child: Center(
-                                                                    child: Text(
-                                                                        'Você ainda não respondeu a nenhum questionário.')))
+                                                                  child: Text(
+                                                                      'Você ainda não respondeu a nenhum questionário.'),
+                                                                ))
                                                         : Padding(
                                                             padding: const EdgeInsets.only(top: 15),
                                                             child: Center(child: CircularProgressIndicator()),
@@ -264,50 +262,7 @@ class _HomeViewState extends State<HomeView> {
                                 ],
                               )
                             else
-                              Container(
-                                  width: size.width,
-                                  padding: EdgeInsets.only(top: 0, bottom: 12, left: 14, right: 14),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(2)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          offset: Offset(0, 2),
-                                          blurRadius: 2,
-                                          color: Colors.black.withOpacity(0.3),
-                                        )
-                                      ]),
-                                  height: MediaQuery.of(context).size.width / 0.85,
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Opacity(
-                                          opacity: 0.82,
-                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                            Text('Empresas',
-                                                style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
-                                            Padding(
-                                                padding: EdgeInsets.symmetric(vertical: 8),
-                                                child: IconButton(icon: Icon(Icons.search), onPressed: () {}))
-                                          ]),
-                                        ),
-                                        if (!ctr.empresas.value.isNullOrBlank)
-                                          Expanded(
-                                            child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                itemCount: ctr.empresas.value.length,
-                                                itemBuilder: (_, index) {
-                                                  EmpresaModel empresa = ctr.empresas.value[index];
-                                                  return EmpresaCard(empresa: empresa);
-                                                }),
-                                          )
-                                        else
-                                          Center(child: Text('Nenhuma empresa encontrada.')),
-                                      ],
-                                    ),
-                                  )),
+                              EmpresaPage(ctr: ctr)
                           ],
                         )),
                   ),

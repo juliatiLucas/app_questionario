@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_factory/containers/perfil/models/usuario.m.dart';
-import './empresa.m.dart';
+
 import './pergunta.m.dart';
+import '../../empresa/models/empresa.m.dart';
+import '../../perfil/models/usuario.m.dart';
 
 class QuestionarioModel {
   int id;
