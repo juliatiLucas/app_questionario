@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/utils/session.dart';
-import '../empresa/widgets/empresa_page.dart';
+import '../empresa/empresa.v.dart';
 import '../perfil/perfil.v.dart';
 import '../pesquisa/pesquisa.v.dart';
 import '../questionario/models/questionario.m.dart';
@@ -262,7 +262,7 @@ class _HomeViewState extends State<HomeView> {
                                 ],
                               )
                             else
-                              EmpresaPage(ctr: ctr)
+                              EmpresaView(ctr: ctr)
                           ],
                         )),
                   ),
