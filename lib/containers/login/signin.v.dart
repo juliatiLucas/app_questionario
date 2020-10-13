@@ -9,7 +9,6 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: GetBuilder<SignInController>(
         init: Get.put(SignInController()),
         builder: (ctr) => Container(
@@ -18,7 +17,7 @@ class SignInView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: 240,
+                height: 180,
                 color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16, bottom: 20),
@@ -44,14 +43,12 @@ class SignInView extends StatelessWidget {
                     Text('Senha'),
                     RecInput(controller: ctr.password, obscureText: true),
                     SizedBox(height: 25),
-                    OutlineButton(
-                      borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                      highlightColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                      splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    FlatButton(
+                      color: Theme.of(context).primaryColor,
                       padding: EdgeInsets.symmetric(vertical: 14),
                       child: Text(
                         'Acessar',
-                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       onPressed: () => ctr.login(context),
                     ),

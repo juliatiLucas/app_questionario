@@ -13,6 +13,9 @@ import '../../home/home.v.dart';
 class SignInController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  
+
+  
 
   void login(BuildContext context) async {
     if (this.email.text.isEmpty || this.password.text.isEmpty) {

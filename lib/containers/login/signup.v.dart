@@ -7,7 +7,6 @@ class SignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: GetBuilder<SignUpController>(
         init: Get.put(SignUpController()),
         builder: (ctr) => Container(
@@ -16,7 +15,7 @@ class SignUpView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: 240,
+                height: 180,
                 color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16, bottom: 20),

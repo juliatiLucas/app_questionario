@@ -21,92 +21,111 @@ class _QuestionarioViewState extends State<QuestionarioView> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: GetBuilder(
-        init: Get.put(QuestionarioController()),
-        initState: (_) {
-          QuestionarioController.to.getQuestionario(widget.questionario.id);
-        },
-        builder: (ctr) => ctr.questionario.value != null
-            ? Scaffold(
-                resizeToAvoidBottomInset: false,
-                backgroundColor: ctr.questionario.value.cor,
-                body: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 15),
-                          SafeArea(
-                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Row(children: [
-                                IconButton(
-                                  icon: Icon(Icons.arrow_back),
-                                  onPressed: Navigator.of(context).pop,
-                                  color: Colors.white,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      ctr.questionario.value.titulo.length > 22
-                                          ? ctr.questionario.value.titulo.toString().substring(0, 21) + '...'
-                                          : ctr.questionario.value.titulo,
-                                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Opacity(
-                                        opacity: 0.8,
-                                        child: Text(
-                                          ctr.questionario.value.empresa.nome,
-                                          style: TextStyle(color: Colors.white, fontSize: 18),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ]),
-                              ctr.respostas.value.length > 0
-                                  ? Row(children: [
+    return GetBuilder(
+      init: Get.put(QuestionarioController()),
+      initState: (_) {
+        QuestionarioController.to.getQuestionario(widget.questionario.id);
+      },
+      builder: (ctr) => ctr.questionario.value != null
+          ? Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                  child: Scaffold(
+                      resizeToAvoidBottomInset: false,
+                      backgroundColor: ctr.questionario.value.cor,
+                      body: Container(
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15),
+                                SafeArea(
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                    Row(children: [
                                       IconButton(
+                                        icon: Icon(Icons.arrow_back),
+                                        onPressed: () {
+                                          ctr.clearQuestionario();
+                                          Navigator.of(context).pop();
+                                        },
                                         color: Colors.white,
-                                        icon: Icon(Icons.check),
-                                        onPressed: () => ctr.enviarResposta(context),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            ctr.questionario.value.titulo.length > 22
+                                                ? ctr.questionario.value.titulo.toString().substring(0, 21) + '...'
+                                                : ctr.questionario.value.titulo,
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {},
+                                            child: Opacity(
+                                              opacity: 0.8,
+                                              child: Text(
+                                                ctr.questionario.value.empresa.nome,
+                                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ]),
+                                    if (ctr.respostas.value.length > 0)
+                                      Row(children: [
+                                        IconButton(
+                                          color: Colors.white,
+                                          icon: Icon(Icons.check),
+                                          onPressed: () => ctr.enviarResposta(context),
+                                        )
+                                      ])
+                                    else
+                                      SizedBox()
+                                  ]),
+                                ),
+                                SizedBox(height: 20),
+                                ...ctr.questionario.value.perguntas.length > 0
+                                    ? ctr.questionario.value.perguntas.map(
+                                        (PerguntaModel pergunta) => PerguntaCard(
+                                            pergunta: pergunta,
+                                            controller: ctr,
+                                            index: this.getIndex(ctr.questionario.value.perguntas, pergunta)),
                                       )
-                                    ])
-                                  : SizedBox()
-                            ]),
-                          ),
-                          SizedBox(height: 20),
-                          ...ctr.questionario.value.perguntas.length > 0
-                              ? ctr.questionario.value.perguntas.map(
-                                  (PerguntaModel pergunta) => PerguntaCard(
-                                      pergunta: pergunta,
-                                      controller: ctr,
-                                      index: this.getIndex(ctr.questionario.value.perguntas, pergunta)),
-                                )
-                              : [
-                                  SizedBox(
-                                      child: Text(
-                                    'Esse questionário não tem perguntas ainda.',
-                                    style: TextStyle(color: Colors.white, fontSize: 16),
-                                  ))
-                                ],
-                        ],
-                      ),
-                    )))
-            : ctr.respondido.value
-                ? Container(
-                    child: Center(
-                      child: Text(
-                        'Voce ja respondeu a este questionário.',
-                        style: TextStyle(fontSize: 20),
-                      ),
+                                    : [
+                                        SizedBox(height: 20),
+                                        Container(
+                                            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(Radius.circular(4))),
+                                            child: Text(
+                                              'Esse questionário não tem perguntas ainda.',
+                                              style: TextStyle(fontSize: 16),
+                                            ))
+                                      ],
+                              ],
+                            ),
+                          )))),
+            )
+          : ctr.respondido.value
+              ? Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      'Voce ja respondeu a este questionário.',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  )
-                : Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
+                  ),
+                )
+              : Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
     );
   }
 }

@@ -23,24 +23,16 @@ class EmpresaCard extends StatelessWidget {
             child: Text("Categoria: ${empresa.categoria.nome}"),
           ),
         SizedBox(height: 5),
-        if (empresa.questionarios.length <= 4)
-          ...empresa.questionarios
-              .map((questionario) => Container(
-                    decoration: BoxDecoration(color: questionario.cor),
-                    height: 25,
-                    width: 25,
-                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                  ))
-              .toList()
-        else
-          ...empresa.questionarios
-              .map((questionario) => Container(
-                    decoration: BoxDecoration(color: questionario.cor),
-                    height: 25,
-                    width: 25,
-                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                  ))
-              .toList(),
+        if (empresa.questionarios.length <= 5)
+          Row(
+              children: empresa.questionarios
+                  .map((questionario) => Container(
+                        decoration: BoxDecoration(color: questionario.cor),
+                        height: 25,
+                        width: 25,
+                        margin: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                      ))
+                  .toList())
       ]),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: EdgeInsets.symmetric(horizontal: 10),

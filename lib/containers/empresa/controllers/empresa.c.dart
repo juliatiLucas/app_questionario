@@ -17,7 +17,6 @@ class EmpresaController extends GetxController {
     if (this.pesquisa.text.isEmpty) return;
     var token = await Session.getToken();
     List<EmpresaModel> empresas = [];
-    print(this.pesquisa.text.trim());
 
     dio
         .post(

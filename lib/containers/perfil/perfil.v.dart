@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import '../questionario/models/resposta.m.dart';
 import '../questionario/widgets/resposta_card.dart';
 import 'controllers/perfil.c.dart';
+import 'editar_perfil.v.dart';
+import 'models/usuario.m.dart';
 
 class PerfilView extends StatelessWidget {
   final int userId;
@@ -28,15 +30,16 @@ class PerfilView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    !ctr.imagem.value.isNullOrBlank
-                        ? Container(
-                            height: 150,
-                            child: CircleAvatar(
-                              radius: 75,
-                              backgroundImage: FileImage(ctr.imagem.value),
-                            ),
-                          )
-                        : SizedBox(),
+                    if (!ctr.imagem.value.isNullOrBlank)
+                      Container(
+                        height: 150,
+                        child: CircleAvatar(
+                          radius: 75,
+                          backgroundImage: FileImage(ctr.imagem.value),
+                        ),
+                      )
+                    else
+                      SizedBox(),
                     SizedBox(height: 20),
                     Expanded(
                       flex: 1,
@@ -116,6 +119,13 @@ class PerfilView extends StatelessWidget {
             ));
   }
 
+  void editarPerfil(BuildContext context, UsuarioModel usuario) {
+    showDialog(
+      context: context,
+      builder: (_) => EditarPerfilView(usuario: usuario),
+    );
+  }
+
   Widget gerarImagem(BuildContext context, PerfilController ctr) {
     NetworkImage imagem;
 
@@ -123,7 +133,6 @@ class PerfilView extends StatelessWidget {
       imagem = NetworkImage(ctr.usuario.value.imagem);
     } catch (err) {
       imagem = null;
-      print(err);
     }
 
     return Container(
@@ -162,9 +171,19 @@ class PerfilView extends StatelessWidget {
                           onPressed: Navigator.of(context).pop,
                           color: Colors.white,
                         ),
-                        Text(
-                          "Perfil",
-                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Perfil",
+                              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              color: Colors.white,
+                              onPressed: () => this.editarPerfil(context, ctr.usuario.value),
+                            )
+                          ],
                         ),
                         SizedBox(height: 10),
                         Container(
@@ -204,44 +223,45 @@ class PerfilView extends StatelessWidget {
                                       child: LinearProgressIndicator()),
                                 SizedBox(height: 15),
                                 if (!ctr.respostas.value.isNull)
-                                  AnimatedOpacity(
-                                      opacity: !ctr.respostas.value.isNull ? 1 : 0,
-                                      duration: Duration(milliseconds: 500),
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                                        height: MediaQuery.of(context).size.height * 0.62,
-                                        width: MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(Radius.circular(3)),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                offset: Offset(0, 2),
-                                                blurRadius: 2,
-                                                color: Colors.black.withOpacity(0.3),
-                                              )
-                                            ]),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Respostas do usuário',
-                                              style: GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.bold),
-                                            ),
-                                            SizedBox(height: 10),
-                                            if (!ctr.respostas.value.isNullOrBlank)
-                                              Expanded(
-                                                child: ListView.builder(
-                                                    itemCount: ctr.respostas.value.length,
-                                                    itemBuilder: (_, index) {
-                                                      RespostaModel resposta = ctr.respostas.value[index];
-                                                      return RespostaCard(resposta: resposta);
-                                                    }),
-                                              )
-                                          ],
-                                        ),
-                                      )),
+                                  if (ctr.respostas.value.length > 0)
+                                    AnimatedOpacity(
+                                        opacity: !ctr.respostas.value.isNull ? 1 : 0,
+                                        duration: Duration(milliseconds: 500),
+                                        child: Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                          height: MediaQuery.of(context).size.height * 0.62,
+                                          width: MediaQuery.of(context).size.width,
+                                          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(Radius.circular(3)),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  offset: Offset(0, 2),
+                                                  blurRadius: 2,
+                                                  color: Colors.black.withOpacity(0.3),
+                                                )
+                                              ]),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Respostas do usuário',
+                                                style: GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 10),
+                                              if (!ctr.respostas.value.isNullOrBlank)
+                                                Expanded(
+                                                  child: ListView.builder(
+                                                      itemCount: ctr.respostas.value.length,
+                                                      itemBuilder: (_, index) {
+                                                        RespostaModel resposta = ctr.respostas.value[index];
+                                                        return RespostaCard(resposta: resposta);
+                                                      }),
+                                                )
+                                            ],
+                                          ),
+                                        )),
                                 SizedBox(height: 20),
                               ],
                             ),

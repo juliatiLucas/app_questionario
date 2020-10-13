@@ -9,6 +9,11 @@ class QuestionarioCard extends StatelessWidget {
   final bool expanded;
   QuestionarioCard({this.questionario, this.expanded = false});
 
+  void abrirQuestionario(BuildContext context) => showDialog(
+        context: context,
+        builder: (_) => QuestionarioView(questionario: questionario),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,9 +25,7 @@ class QuestionarioCard extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.black.withOpacity(0.18),
             highlightColor: Colors.white.withOpacity(0.12),
-            onTap: () => !questionario.respondido
-                ? Get.to(QuestionarioView(questionario: questionario), transition: Transition.rightToLeft)
-                : null,
+            onTap: () => !questionario.respondido ? this.abrirQuestionario(context) : null,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
