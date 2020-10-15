@@ -204,19 +204,22 @@ class PerfilView extends StatelessWidget {
                                 else
                                   SizedBox(),
                                 if (!ctr.usuario.value.isNullOrBlank)
-                                  Opacity(
-                                      opacity: 0.85,
-                                      child: Column(children: [
-                                        Text(
-                                          ctr.usuario.value.nome,
-                                          style:
-                                              TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          ctr.usuario.value.email,
-                                          style: TextStyle(color: Colors.white, fontSize: 16),
-                                        ),
-                                      ]))
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 8),
+                                    child: Opacity(
+                                        opacity: 0.85,
+                                        child: Column(children: [
+                                          Text(
+                                            ctr.usuario.value.nome,
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            ctr.usuario.value.email,
+                                            style: TextStyle(color: Colors.white, fontSize: 16),
+                                          ),
+                                        ])),
+                                  )
                                 else
                                   Padding(
                                       padding: EdgeInsets.symmetric(vertical: 25, horizontal: 32),
