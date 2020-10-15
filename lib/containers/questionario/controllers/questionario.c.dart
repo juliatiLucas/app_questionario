@@ -81,6 +81,7 @@ class QuestionarioController extends GetxController {
           "opcao": resposta?.opcao?.id.toString(),
           "pergunta": resposta.pergunta.toString(),
         });
+
       }
     }
 

@@ -6,39 +6,50 @@ class RespostaCard extends StatelessWidget {
   RespostaCard({this.resposta});
 
   void showInfo(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              titlePadding: EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-              contentPadding: EdgeInsets.only(top: 5, left: 18, right: 18, bottom: 16),
-              title: Row(
-                children: [
-                  Container(
-                    width: 25,
-                    height: 25,
-                    decoration: BoxDecoration(
-                        color: resposta.pergunta.questionario.cor,
-                        borderRadius: BorderRadius.all(Radius.circular(2.5))),
-                  ),
-                  SizedBox(width: 10),
-                  Text(resposta.pergunta.pergunta),
-                ],
-              ),
-              content: Container(
-                height: 120,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    Size size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Container(
+        height: 180,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Opacity(
-                        opacity: 0.8,
-                        child: Text("R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
-                            style: TextStyle(fontSize: 18))),
-                    Expanded(child: Container()),
-                    Align(alignment: Alignment.bottomRight, child: Text(resposta.data)),
+                    Text(
+                      resposta.pergunta.pergunta,
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      width: 25,
+                      height: 25,
+                      decoration: BoxDecoration(
+                          color: resposta.pergunta.questionario.cor,
+                          borderRadius: BorderRadius.all(Radius.circular(2.5))),
+                    ),
                   ],
                 ),
-              ),
-            ));
+                SizedBox(height: 10),
+                Opacity(
+                    opacity: 0.8,
+                    child: Text("R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
+                        style: TextStyle(fontSize: 18))),
+                Expanded(child: Container()),
+                Align(alignment: Alignment.bottomRight, child: Text(resposta.data)),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override

@@ -1,5 +1,6 @@
 import './opcao.m.dart';
 import './pergunta.m.dart';
+import 'package:intl/intl.dart';
 
 class RespostaModel {
   int id;
@@ -11,7 +12,7 @@ class RespostaModel {
   RespostaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     resposta = json['resposta'] ?? "";
-    data = json['data'];
+    data = DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(json['data']).subtract(Duration(hours: 3)));
     pergunta = json['pergunta'] != null ? PerguntaModel.fromJson(json['pergunta']) : null;
     opcao = json['opcao'] != null ? OpcaoModel.fromJson(json['opcao']) : null;
   }
