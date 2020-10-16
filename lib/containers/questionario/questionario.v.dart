@@ -111,12 +111,24 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                           )))),
             )
           : ctr.respondido.value
-              ? Container(
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      'Voce ja respondeu a este questionário.',
-                      style: TextStyle(fontSize: 20),
+              ? AlertDialog(
+                  contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+                  content: Container(
+                    height: 275,
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        Image.asset('assets/respondido.png', width: 210),
+                        Text(
+                          'Você já respondeu esse questionário.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        FlatButton(
+                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                            onPressed: Navigator.of(context).pop,
+                            child: Text('FECHAR'))
+                      ]),
                     ),
                   ),
                 )

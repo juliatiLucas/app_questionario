@@ -35,5 +35,6 @@ flutter:
 
   assets:
     - assets/quiz-factory-inapp.png
+    - assets/respondido.png
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

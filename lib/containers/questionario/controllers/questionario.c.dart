@@ -36,10 +36,12 @@ class QuestionarioController extends GetxController {
 
   void clearQuestionario() {
     this.questionario.value = null;
+    this.respondido.value = false;
     update();
   }
 
   void getQuestionario(int questionarioId) async {
+    this.clearQuestionario();
     var token = await Session.getToken();
     var userInfo = await Session.getUserInfo();
     QuestionarioModel questionario;

@@ -16,7 +16,7 @@ class RespostaCard extends StatelessWidget {
           body: Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            width: MediaQuery.of(context).size.width,
+            width: size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

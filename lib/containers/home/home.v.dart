@@ -78,7 +78,6 @@ class _HomeViewState extends State<HomeView> {
               return null;
             },
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
               child: Column(children: [
                 Stack(children: [
                   Positioned(
@@ -95,10 +94,7 @@ class _HomeViewState extends State<HomeView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    Image.asset(
-                                      'assets/quiz-factory-inapp.png',
-                                      width: 50,
-                                    ),
+                                    Image.asset('assets/quiz-factory-inapp.png', width: 50),
                                     PopupMenuButton<String>(
                                       onSelected: this.optionSelected,
                                       icon: Icon(Icons.more_vert, color: Colors.white),
@@ -219,7 +215,7 @@ class _HomeViewState extends State<HomeView> {
                                                       color: Colors.black.withOpacity(0.3),
                                                     )
                                                   ]),
-                                              height: MediaQuery.of(context).size.width / 0.85,
+                                              height: ctr.respostas.value.isNullOrBlank ? 120 : MediaQuery.of(context).size.width / 0.85,
                                               child: Material(
                                                 color: Colors.transparent,
                                                 child: Column(
@@ -227,33 +223,35 @@ class _HomeViewState extends State<HomeView> {
                                                   children: [
                                                     Opacity(
                                                       opacity: 0.82,
-                                                      child: Text(
-                                                        'Suas respostas',
-                                                        style: GoogleFonts.dmSans(
-                                                            fontWeight: FontWeight.bold, fontSize: 18),
-                                                      ),
+                                                      child: Padding(
+                                                          padding: EdgeInsets.symmetric(vertical: 10),
+                                                          child: Text('Suas respostas',
+                                                              style: GoogleFonts.dmSans(
+                                                                  fontWeight: FontWeight.bold, fontSize: 18))),
                                                     ),
-                                                    !ctr.respostas.value.isNullOrBlank
-                                                        ? ctr.respostas.value.length > 0
-                                                            ? Expanded(
-                                                                child: ListView.builder(
-                                                                padding: EdgeInsets.zero,
-                                                                itemCount: ctr.respostas.value.length,
-                                                                itemBuilder: (_, index) {
-                                                                  RespostaModel resposta = ctr.respostas.value[index];
-                                                                  return RespostaCard(resposta: resposta);
-                                                                },
-                                                              ))
-                                                            : Padding(
-                                                                padding: EdgeInsets.only(top: 15),
-                                                                child: Center(
-                                                                  child: Text(
-                                                                      'Você ainda não respondeu a nenhum questionário.'),
-                                                                ))
-                                                        : Padding(
-                                                            padding: const EdgeInsets.only(top: 15),
-                                                            child: Center(child: CircularProgressIndicator()),
-                                                          )
+                                                    if (!ctr.respostas.value.isNull)
+                                                      if (ctr.respostas.value.length > 0)
+                                                        Expanded(
+                                                            child: ListView.builder(
+                                                          padding: EdgeInsets.zero,
+                                                          itemCount: ctr.respostas.value.length,
+                                                          itemBuilder: (_, index) {
+                                                            RespostaModel resposta = ctr.respostas.value[index];
+                                                            return RespostaCard(resposta: resposta);
+                                                          },
+                                                        ))
+                                                      else
+                                                        Padding(
+                                                            padding: EdgeInsets.only(top: 15),
+                                                            child: Center(
+                                                              child: Text(
+                                                                  'Você ainda não respondeu a nenhum questionário.'),
+                                                            ))
+                                                    else
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(top: 15),
+                                                        child: Center(child: CircularProgressIndicator()),
+                                                      )
                                                   ],
                                                 ),
                                               ))),
@@ -267,7 +265,7 @@ class _HomeViewState extends State<HomeView> {
                         )),
                   ),
                 ]),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
               ]),
             ),
           )),
