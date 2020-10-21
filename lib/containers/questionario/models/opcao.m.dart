@@ -1,4 +1,3 @@
-import '../../perfil/models/usuario.m.dart';
 
 class OpcaoModel {
   int id;
@@ -6,6 +5,6 @@ class OpcaoModel {
 
   OpcaoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    opcao = utf8convert(json['opcao']);
+    opcao = json['opcao'];
   }
 }

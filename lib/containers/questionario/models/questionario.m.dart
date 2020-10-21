@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import './pergunta.m.dart';
 import '../../empresa/models/empresa.m.dart';
-import '../../perfil/models/usuario.m.dart';
+import 'pergunta.m.dart';
 
 class QuestionarioModel {
   int id;
@@ -14,7 +12,7 @@ class QuestionarioModel {
 
   QuestionarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    titulo = utf8convert(json['titulo']);
+    titulo = json['titulo'];
     empresa = json['empresa'] != null ? EmpresaModel.fromJson(json['empresa']) : null;
     cor = Color(int.parse(json['cor'].toString().replaceFirst('#', '0xff')));
     respondido = json['respondido'] ?? false;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import './signup.v.dart';
 import '../../core/components/rec_input.dart';
 import 'controllers/signin.c.dart';
+import 'signup.v.dart';
 
 class SignInView extends StatelessWidget {
   @override

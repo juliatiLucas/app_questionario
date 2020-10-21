@@ -12,9 +12,9 @@ import 'editar_perfil.v.dart';
 import 'models/usuario.m.dart';
 
 class PerfilView extends StatelessWidget {
-  final int userId;
   PerfilView({this.userId});
-  PerfilController _perfilController = Get.put(PerfilController());
+  final int userId;
+  final PerfilController _perfilController = Get.put(PerfilController());
 
   void mudarFoto(BuildContext context) {
     final picker = ImagePicker();

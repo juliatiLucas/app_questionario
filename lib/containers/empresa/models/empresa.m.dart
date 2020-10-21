@@ -1,4 +1,3 @@
-import '../../perfil/models/usuario.m.dart';
 import '../../questionario/models/categoria.m.dart';
 import '../../questionario/models/questionario.m.dart';
 
@@ -12,7 +11,7 @@ class EmpresaModel {
 
   EmpresaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nome = utf8convert(json['nome']);
+    nome = json['nome'];
     email = json['email'];
     telefone = json['telefone'];
     categoria = json['categoria'] != null ? CategoriaModel.fromJson(json['categoria']) : null;

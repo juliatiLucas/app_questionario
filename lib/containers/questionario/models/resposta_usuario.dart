@@ -1,4 +1,4 @@
-import './opcao.m.dart';
+import 'opcao.m.dart';
 
 class RespostaUsuario {
   int pergunta;

@@ -19,6 +19,35 @@ class _QuestionarioViewState extends State<QuestionarioView> {
     return index;
   }
 
+  void confirmarSaida(QuestionarioController ctr) {
+    if (ctr.questionario.value.perguntas.length > 0) {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text("Aviso"),
+                content: Container(
+                  child: Text('Você tem certeza? Suas respostas não serão salvas.'),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text('CANCELAR'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  FlatButton(
+                      child: Text('SAIR'),
+                      onPressed: () {
+                        ctr.clearQuestionario();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      }),
+                ],
+              ));
+    } else {
+      ctr.clearQuestionario();
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -45,10 +74,7 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                     Row(children: [
                                       IconButton(
                                         icon: Icon(Icons.arrow_back),
-                                        onPressed: () {
-                                          ctr.clearQuestionario();
-                                          Navigator.of(context).pop();
-                                        },
+                                        onPressed: () => this.confirmarSaida(ctr),
                                         color: Colors.white,
                                       ),
                                       Column(
@@ -58,8 +84,7 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                             ctr.questionario.value.titulo.length > 22
                                                 ? ctr.questionario.value.titulo.toString().substring(0, 21) + '...'
                                                 : ctr.questionario.value.titulo,
-                                            style: TextStyle(
-                                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                           ),
                                           GestureDetector(
                                             onTap: () {},
@@ -99,8 +124,7 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                                         Container(
                                             padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                                             decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(Radius.circular(4))),
+                                                color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(4))),
                                             child: Text(
                                               'Esse questionário não tem perguntas ainda.',
                                               style: TextStyle(fontSize: 16),

@@ -1,6 +1,7 @@
-import './opcao.m.dart';
-import './pergunta.m.dart';
 import 'package:intl/intl.dart';
+
+import 'opcao.m.dart';
+import 'pergunta.m.dart';
 
 class RespostaModel {
   int id;

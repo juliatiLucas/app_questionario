@@ -1,6 +1,5 @@
-import './opcao.m.dart';
-import './questionario.m.dart';
-import '../../../core/components/utf8_converter.dart' as convert;
+import 'opcao.m.dart';
+import 'questionario.m.dart';
 
 class PerguntaModel {
   int id;
@@ -11,7 +10,7 @@ class PerguntaModel {
 
   PerguntaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    pergunta = convert.utf8convert(json['pergunta']);
+    pergunta = json['pergunta'];
     tipo = json['tipo'];
     questionario = json['questionario'] != null ? QuestionarioModel.fromJson(json['questionario']) : null;
 

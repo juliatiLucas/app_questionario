@@ -215,7 +215,7 @@ class _HomeViewState extends State<HomeView> {
                                                       color: Colors.black.withOpacity(0.3),
                                                     )
                                                   ]),
-                                              height: ctr.respostas.value.isNullOrBlank ? 120 : MediaQuery.of(context).size.width / 0.85,
+                                              height: ctr.respostas.value.isNullOrBlank ? 150 : MediaQuery.of(context).size.width / 0.85,
                                               child: Material(
                                                 color: Colors.transparent,
                                                 child: Column(

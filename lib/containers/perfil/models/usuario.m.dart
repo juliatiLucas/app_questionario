@@ -1,10 +1,3 @@
-import 'dart:convert' show utf8;
-
-String utf8convert(String text) {
-  List<int> bytes = text.toString().codeUnits;
-  return utf8.decode(bytes);
-}
-
 class UsuarioModel {
   int id;
   String nome;
@@ -14,7 +7,7 @@ class UsuarioModel {
 
   UsuarioModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nome = utf8convert(json['nome']);
+    nome = json['nome'];
     imagem = json['imagem'] ?? null;
     email = json['email'];
   }
