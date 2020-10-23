@@ -34,33 +34,44 @@ class EmpresaCard extends StatelessWidget {
                       ))
                   .toList())
       ]),
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: EdgeInsets.symmetric(horizontal: 10),
       children: [
         SizedBox(height: 10),
-        Opacity(
-          opacity: 0.85,
-          child: Text(
-            "Questionários",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        if (empresa.questionarios.length == 0)
+          Opacity(
+            opacity: 0.87,
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Essa empresa não tem questionários.',
+                  style: TextStyle(fontSize: 16),
+                )),
+          )
+        else ...[
+          Opacity(
+            opacity: 0.85,
+            child: Text(
+              "Questionários",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
-        ),
-        Container(
-          height: 250,
-          child: NotificationListener<OverscrollIndicatorNotification>(
-            onNotification: (overscroll) {
-              overscroll.disallowGlow();
-              return null;
-            },
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: empresa.questionarios.length,
-                itemBuilder: (_, index) {
-                  QuestionarioModel questionario = empresa.questionarios[index];
-                  return QuestionarioCard(questionario: questionario, expanded: true);
-                }),
+          Container(
+            height: 250,
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (overscroll) {
+                overscroll.disallowGlow();
+                return null;
+              },
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: empresa.questionarios.length,
+                  itemBuilder: (_, index) {
+                    QuestionarioModel questionario = empresa.questionarios[index];
+                    return QuestionarioCard(questionario: questionario, expanded: true);
+                  }),
+            ),
           ),
-        ),
+        ]
       ],
     );
   }

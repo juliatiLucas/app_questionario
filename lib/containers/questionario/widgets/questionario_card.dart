@@ -18,7 +18,7 @@ class QuestionarioCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        decoration: BoxDecoration(color: questionario.cor, borderRadius: BorderRadius.all(Radius.circular(4))),
+        decoration: BoxDecoration(color: questionario.cor, borderRadius: BorderRadius.all(Radius.circular(2))),
         width: expanded ? MediaQuery.of(context).size.width : 200,
         child: Material(
           color: !questionario.respondido ? Colors.transparent : Colors.black.withOpacity(0.22),
@@ -37,6 +37,13 @@ class QuestionarioCard extends StatelessWidget {
                   opacity: 0.8,
                   child: Text(
                     !questionario.empresa.isNullOrBlank ? "Empresa: ${questionario.empresa.nome}" : '',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+                Opacity(
+                  opacity: 0.8,
+                  child: Text(
+                    !questionario.empresa.isNullOrBlank ? "Perguntas: ${questionario.perguntas.length}" : '',
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),

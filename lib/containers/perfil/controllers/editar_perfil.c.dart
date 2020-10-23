@@ -25,7 +25,11 @@ class EditarPerfilController extends GetxController {
         options: Options(headers: token),
       )
           .then((res) {
-        if (res.statusCode == 200) _perfilController.getUserInfo(usuarioId);
+        if (res.statusCode == 200) {
+          _perfilController.getUserInfo(usuarioId);
+          Get.back();
+          
+        }
       });
     }
   }

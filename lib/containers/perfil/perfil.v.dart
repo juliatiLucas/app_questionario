@@ -21,6 +21,7 @@ class PerfilView extends StatelessWidget {
     File file;
     Size size = MediaQuery.of(context).size;
 
+    print(_perfilController.usuario.value.imagem);
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -33,12 +34,9 @@ class PerfilView extends StatelessWidget {
                   children: [
                     Container(
                       height: 150,
-                      child: CircleAvatar(
-                        radius: 75,
-                        backgroundImage: !ctr.imagem.value.isNullOrBlank
-                            ? FileImage(ctr.imagem.value)
-                            : NetworkImage(_perfilController.usuario.value.imagem),
-                      ),
+                      child: ctr.imagem.value != null
+                          ? CircleAvatar(radius: 75, backgroundImage: FileImage(ctr.imagem.value))
+                          : SizedBox(),
                     ),
                     SizedBox(height: 20),
                     Expanded(
