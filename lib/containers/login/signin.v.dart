@@ -17,7 +17,7 @@ class SignInView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: 180,
+                height: 220,
                 color: Theme.of(context).primaryColor,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16, bottom: 20),

@@ -17,9 +17,15 @@ class PerfilController extends GetxController {
   Rx<UsuarioModel> usuario = Rx<UsuarioModel>();
   Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
   Rx<File> imagem = Rx<File>();
+  Rx<String> nomeImagem = Rx<String>();
 
   void setImagem(File file) {
     imagem.value = file;
+    if (file == null)
+      nomeImagem.value = null;
+    else
+      nomeImagem.value = file.path.split('/')[file.path.split('/').indexOf(file.path.split('/').last)];
+
     update();
   }
 

@@ -63,7 +63,6 @@ class _HomeViewState extends State<HomeView> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        backgroundColor: Color(0xff3b7ce3),
         body: GetBuilder<HomeController>(
           init: Get.put(HomeController()),
           initState: (_) {
@@ -79,14 +78,10 @@ class _HomeViewState extends State<HomeView> {
                   return null;
                 },
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
                   child: Column(children: [
                     Stack(
                       children: [
-                        Container(
-                          height: size.height + (size.height * 0.5),
-                          color: Colors.white,
-                        ),
+
                         Positioned(
                           child: Container(
                               decoration: BoxDecoration(color: Color(0xff3b7ce3)),
@@ -172,20 +167,17 @@ class _HomeViewState extends State<HomeView> {
                                                 children: [
                                                   Opacity(
                                                     opacity: 0.82,
-                                                    child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Text('Questionários',
-                                                              style: GoogleFonts.dmSans(
-                                                                  fontWeight: FontWeight.bold, fontSize: 18)),
-                                                          Padding(
-                                                              padding: EdgeInsets.symmetric(vertical: 8),
-                                                              child: IconButton(
-                                                                icon: Icon(Icons.search),
-                                                                onPressed: () => Get.to(PesquisaView(),
-                                                                    transition: Transition.downToUp),
-                                                              ))
-                                                        ]),
+                                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                      Text('Questionários',
+                                                          style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, fontSize: 18)),
+                                                      Padding(
+                                                          padding: EdgeInsets.symmetric(vertical: 8),
+                                                          child: IconButton(
+                                                            icon: Icon(Icons.search),
+                                                            onPressed: () =>
+                                                                Get.to(PesquisaView(), transition: Transition.downToUp),
+                                                          ))
+                                                    ]),
                                                   ),
                                                   if (!ctr.questionarios.value.isNullOrBlank)
                                                     ctr.questionarios.value.length > 0
@@ -194,8 +186,7 @@ class _HomeViewState extends State<HomeView> {
                                                             scrollDirection: Axis.horizontal,
                                                             itemCount: ctr.questionarios.value.length,
                                                             itemBuilder: (_, index) {
-                                                              QuestionarioModel questionario =
-                                                                  ctr.questionarios.value[index];
+                                                              QuestionarioModel questionario = ctr.questionarios.value[index];
                                                               return QuestionarioCard(questionario: questionario);
                                                             },
                                                           ))
@@ -256,8 +247,8 @@ class _HomeViewState extends State<HomeView> {
                                                               Padding(
                                                                   padding: EdgeInsets.only(top: 15),
                                                                   child: Center(
-                                                                    child: Text(
-                                                                        'Você ainda não respondeu a nenhum questionário.'),
+                                                                    child:
+                                                                        Text('Você ainda não respondeu a nenhum questionário.'),
                                                                   ))
                                                           else
                                                             Padding(

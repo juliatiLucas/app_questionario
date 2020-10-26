@@ -51,11 +51,14 @@ class QuestionarioController extends GetxController {
         questionario = new QuestionarioModel.fromJson(json.decode(res.body));
 
         for (var pergunta in questionario.perguntas) {
-          respostas.add(new RespostaUsuario(
-            pergunta: pergunta.id,
-            usuario: userInfo['id'],
-            opcao: null,
-          ));
+          if (pergunta.tipo == "fechada" && pergunta.opcoes.length == 0) {
+          } else {
+            respostas.add(new RespostaUsuario(
+              pergunta: pergunta.id,
+              usuario: userInfo['id'],
+              opcao: null,
+            ));
+          }
         }
 
         this.respostas.value = respostas;
@@ -83,7 +86,6 @@ class QuestionarioController extends GetxController {
           "opcao": resposta?.opcao?.id.toString(),
           "pergunta": resposta.pergunta.toString(),
         });
-
       }
     }
 

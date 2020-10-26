@@ -30,13 +30,24 @@ class PerguntaCard extends StatelessWidget {
           Opacity(
             opacity: 0.75,
             child: Text(
-              pergunta.pergunta,
+              "${pergunta.pergunta} ${pergunta.id.toString()}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 20),
           if (pergunta.tipo == "aberta")
             RecInput(onChanged: (String value) => controller.addTextoResposta(value, index))
+          else if (pergunta.tipo == "fechada" && pergunta.opcoes.length == 0)
+            Opacity(
+              opacity: 0.87,
+              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Row(children: [
+                    Icon(Icons.close),
+                    SizedBox(width: 5),
+                    Text('Sem opções de resposta.', style: TextStyle(fontSize: 16))
+                  ])),
+            )
           else
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),

@@ -14,30 +14,30 @@ import 'models/usuario.m.dart';
 class PerfilView extends StatelessWidget {
   PerfilView({this.userId});
   final int userId;
-  final PerfilController _perfilController = Get.put(PerfilController());
 
   void mudarFoto(BuildContext context) {
     final picker = ImagePicker();
     File file;
     Size size = MediaQuery.of(context).size;
 
-    print(_perfilController.usuario.value.imagem);
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         builder: (_) => GetBuilder<PerfilController>(
               builder: (ctr) => Container(
                 width: size.width,
-                height: !ctr.imagem.isNull ? 395 : 100,
+                height: 250,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 150,
-                      child: ctr.imagem.value != null
-                          ? CircleAvatar(radius: 75, backgroundImage: FileImage(ctr.imagem.value))
-                          : SizedBox(),
-                    ),
+                    if (!ctr.imagem.value.isNullOrBlank)
+                      Container(
+                        width: size.width * 0.8,
+                        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(2))),
+                        child: Text(
+                            "${ctr.nomeImagem.value.length > 40 ? ctr.nomeImagem.value.substring(0, 40) : ctr.nomeImagem.value} Selecionada"),
+                      ),
                     SizedBox(height: 20),
                     Expanded(
                       flex: 1,
@@ -217,8 +217,7 @@ class PerfilView extends StatelessWidget {
                                           child: Column(children: [
                                             Text(
                                               ctr.usuario.value.nome,
-                                              style: TextStyle(
-                                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                             ),
                                             Text(
                                               ctr.usuario.value.email,
