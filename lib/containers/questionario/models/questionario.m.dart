@@ -23,12 +23,8 @@ class QuestionarioModel {
       List<PerguntaModel> perguntas = [];
       List<PerguntaModel> ordenadas = [];
       for (var p in json['perguntas']) perguntas.add(new PerguntaModel.fromJson(p));
-      for (int i = 0; i < posicao.length; i++) {
+      for (int i = 0; i < posicao.length; i++)
         ordenadas.add(perguntas.firstWhere((pergunta) => pergunta.id == posicao[i]));
-      }
-      print(ordenadas);
-      print(ordenadas.length);
-
 
       this.perguntas = ordenadas;
     }

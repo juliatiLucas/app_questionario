@@ -27,26 +27,30 @@ class QuestionarioCard extends StatelessWidget {
             highlightColor: Colors.white.withOpacity(0.12),
             onTap: () => !questionario.respondido ? this.abrirQuestionario(context) : null,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
                   questionario.titulo,
                   style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                Opacity(
-                  opacity: 0.8,
-                  child: Text(
-                    !questionario.empresa.isNullOrBlank ? "Empresa: ${questionario.empresa.nome}" : '',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-                Opacity(
-                  opacity: 0.8,
-                  child: Text(
-                    !questionario.empresa.isNullOrBlank ? "Perguntas: ${questionario.perguntas.length}" : '',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
+                !questionario.empresa.isNullOrBlank
+                    ? Opacity(
+                        opacity: 0.8,
+                        child: Text(
+                          "Empresa: ${questionario.empresa.nome}",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      )
+                    : Container(),
+                !questionario.empresa.isNullOrBlank
+                    ? Opacity(
+                        opacity: 0.8,
+                        child: Text(
+                          "Perguntas: ${questionario.perguntas.length}",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      )
+                    : Container(),
               ]),
             ),
           ),

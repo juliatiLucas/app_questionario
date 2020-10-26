@@ -12,6 +12,7 @@ class PesquisaView extends StatelessWidget {
       init: Get.put(PesquisaController()),
       builder: (ctr) => Scaffold(
         body: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             child: Column(
               children: [
