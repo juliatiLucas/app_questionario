@@ -32,8 +32,7 @@ class RespostaCard extends StatelessWidget {
                       width: 25,
                       height: 25,
                       decoration: BoxDecoration(
-                          color: resposta.pergunta.questionario.cor,
-                          borderRadius: BorderRadius.all(Radius.circular(2.5))),
+                          color: resposta.pergunta.questionario.cor, borderRadius: BorderRadius.all(Radius.circular(2.5))),
                     ),
                   ],
                 ),
@@ -43,7 +42,10 @@ class RespostaCard extends StatelessWidget {
                     child: Text("R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
                         style: TextStyle(fontSize: 18))),
                 Expanded(child: Container()),
-                Align(alignment: Alignment.bottomRight, child: Text(resposta.data)),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Text("Questionário: ${resposta.pergunta.questionario.titulo}"),
+                  Text(resposta.data),
+                ]),
                 SizedBox(height: 20),
               ],
             ),
@@ -71,8 +73,7 @@ class RespostaCard extends StatelessWidget {
                     width: 25,
                     height: 25,
                     decoration: BoxDecoration(
-                        color: resposta.pergunta.questionario.cor,
-                        borderRadius: BorderRadius.all(Radius.circular(2.5))),
+                        color: resposta.pergunta.questionario.cor, borderRadius: BorderRadius.all(Radius.circular(2.5))),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 10),
@@ -80,19 +81,15 @@ class RespostaCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Opacity(
-                          opacity: 0.9,
-                          child: Text(
-                            "Questionario: " + resposta?.pergunta?.questionario?.titulo ?? "",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Opacity(opacity: 0.8, child: Text(resposta.pergunta.pergunta, style: TextStyle(fontSize: 16))),
+                            opacity: 0.8,
+                            child: Text(
+                              resposta.pergunta.pergunta,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            )),
                         Opacity(
                             opacity: 0.8,
                             child: Text(
-                                "Resposta: " +
-                                    (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
+                                "Resposta: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
                                 style: TextStyle(fontSize: 16))),
                       ],
                     ),

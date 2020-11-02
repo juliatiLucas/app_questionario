@@ -27,9 +27,12 @@ class EmpresaCard extends StatelessWidget {
           Row(
               children: empresa.questionarios
                   .map((questionario) => Container(
-                        decoration: BoxDecoration(color: questionario.cor),
-                        height: 25,
-                        width: 25,
+                        decoration: BoxDecoration(
+                          color: questionario.cor,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        height: 20,
+                        width: 20,
                         margin: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
                       ))
                   .toList())
@@ -50,11 +53,9 @@ class EmpresaCard extends StatelessWidget {
         else ...[
           Opacity(
             opacity: 0.85,
-            child: Text(
-              "Questionários",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            child: Text("Questionários", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           ),
+          SizedBox(height: 5),
           Container(
             height: 250,
             child: NotificationListener<OverscrollIndicatorNotification>(
