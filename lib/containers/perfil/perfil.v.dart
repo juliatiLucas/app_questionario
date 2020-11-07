@@ -106,6 +106,13 @@ class PerfilView extends StatelessWidget {
                                       ],
                                     ),
                                   )),
+                              if (ctr.uploading.value) ...[
+                                SizedBox(height: 20),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: LinearProgressIndicator(),
+                                )
+                              ]
                             ],
                           ),
                         ),

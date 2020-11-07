@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart' as httpParser;
 
 import '../../../core/utils/api.dart';
 import '../../../core/utils/session.dart';
@@ -18,6 +19,12 @@ class PerfilController extends GetxController {
   Rx<List<RespostaModel>> respostas = Rx<List<RespostaModel>>();
   Rx<File> imagem = Rx<File>();
   Rx<String> nomeImagem = Rx<String>();
+  Rx<bool> uploading = Rx<bool>(false);
+
+  void setUploading(bool value) {
+    this.uploading.value = value;
+    update();
+  }
 
   void setImagem(File file) {
     imagem.value = file;
@@ -60,19 +67,26 @@ class PerfilController extends GetxController {
     var token = await Session.getToken();
     var userInfo = await Session.getUserInfo();
 
+    await Firebase.initializeApp();
+
     String ext = this.imagem.value.path.split('.').last;
-    FormData data = new FormData.fromMap({
-      "imagem": await MultipartFile.fromFile(this.imagem.value.path,
-          filename: DateTime.now().millisecondsSinceEpoch.toString() + ".$ext",
-          contentType: httpParser.MediaType('image', (ext == 'jpg' || ext == 'jpeg') ? 'jpeg' : 'png'))
+    var storage = FirebaseStorage.instance;
+    this.setUploading(true);
+    storage.ref(DateTime.now().millisecondsSinceEpoch.toString() + ".$ext").putFile(this.imagem.value).then((snapshot) {
+      snapshot.state;
+      snapshot.ref.getDownloadURL().then((value) {
+        var data = json.encode({"imagem": value});
+
+        dio.put("${Api.address}/usuarios/${userInfo['id']}", data: data, options: Options(headers: token)).then((res) {
+          this.setUploading(false);
+          if (res.statusCode == 200) {
+            Get.back();
+            this.getUserInfo(userInfo['id']);
+          }
+        });
+      });
     });
 
-    dio.put("${Api.address}/usuarios/${userInfo['id']}", data: data, options: Options(headers: token)).then((res) {
-      if (res.statusCode == 200) {
-        Get.back();
-        this.getUserInfo(userInfo['id']);
-      }
-    });
     this.setImagem(null);
   }
 }

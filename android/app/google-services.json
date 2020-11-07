@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1045926604561",
+    "firebase_url": "https://quizfactory-1602094364766.firebaseio.com",
+    "project_id": "quizfactory-1602094364766",
+    "storage_bucket": "quizfactory-1602094364766.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045926604561:android:9402457741f801bf7626b0",
+        "android_client_info": {
+          "package_name": "com.example.quiz_factory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045926604561-308fi915nosbjjllt9gd1805tka55sf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoVPN5sbs_lXnuBimxdyk3cVLHixPAszQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045926604561-308fi915nosbjjllt9gd1805tka55sf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
