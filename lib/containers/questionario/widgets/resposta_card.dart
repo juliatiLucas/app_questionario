@@ -11,7 +11,7 @@ class RespostaCard extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (_) => Container(
-        height: 180,
+        height: 195,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
@@ -37,10 +37,22 @@ class RespostaCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10),
-                Opacity(
+                if (resposta != null)
+                  Opacity(
                     opacity: 0.8,
-                    child: Text("R: " + (resposta.resposta.length > 0 ? resposta.resposta : resposta?.opcao?.opcao),
-                        style: TextStyle(fontSize: 18))),
+                    child: resposta.resposta.length > 0
+                        ? Text("R:  ${resposta.resposta}", style: TextStyle(fontSize: 18))
+                        : Column(
+                            children: resposta.pergunta.opcoes
+                                .map((opcao) => Text(
+                                      opcao.opcao,
+                                      style: opcao.opcao == resposta?.opcao?.opcao
+                                          ? TextStyle(fontWeight: FontWeight.bold, color:Theme.of(context).primaryColor)
+                                          : TextStyle(fontWeight: FontWeight.normal),
+                                    ))
+                                .toList(),
+                          ),
+                  ),
                 Expanded(child: Container()),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text("Questionário: ${resposta.pergunta.questionario.titulo}"),
