@@ -43,6 +43,7 @@ class RespostaCard extends StatelessWidget {
                     child: resposta.resposta.length > 0
                         ? Text("R:  ${resposta.resposta}", style: TextStyle(fontSize: 18))
                         : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                             children: resposta.pergunta.opcoes
                                 .map((opcao) => Text(
                                       opcao.opcao,
