@@ -24,9 +24,7 @@ class SignUpView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Opacity(
-                          opacity: 0.8,
-                          child: Text('Crie sua conta', style: TextStyle(color: Colors.white, fontSize: 16))),
+                      Opacity(opacity: 0.8, child: Text('Crie sua conta', style: TextStyle(color: Colors.white, fontSize: 16))),
                       Text(
                         'Cadastro',
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
@@ -48,14 +46,12 @@ class SignUpView extends StatelessWidget {
                       Text('Senha'),
                       RecInput(controller: ctr.password, obscureText: true),
                       SizedBox(height: 25),
-                      OutlineButton(
-                        borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                        highlightColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                        splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                      FlatButton(
+                        color: Theme.of(context).primaryColor,
                         padding: EdgeInsets.symmetric(vertical: 14),
                         child: Text(
                           'Cadastrar',
-                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         onPressed: () => ctr.signUp(context),
                       ),

@@ -46,7 +46,6 @@ class HomeController extends GetxController {
         .then((res) {
       if (res.statusCode == 200) {
         for (var r in json.decode(res.body)) respostas.add(new RespostaModel.fromJson(r));
-
         this.respostas.value = respostas;
 
         update();
