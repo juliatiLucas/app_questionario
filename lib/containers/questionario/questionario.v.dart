@@ -152,8 +152,9 @@ class _QuestionarioViewState extends State<QuestionarioView> {
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 18),
                           ),
+                          SizedBox(height: 15),
                           FlatButton(
-                              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                              padding: EdgeInsets.symmetric(vertical: 18, horizontal: 65),
                               onPressed: Navigator.of(context).pop,
                               child: Text('FECHAR'))
                         ]),

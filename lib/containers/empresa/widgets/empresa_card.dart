@@ -57,14 +57,14 @@ class EmpresaCard extends StatelessWidget {
           ),
           SizedBox(height: 5),
           Container(
-            height: 250,
             child: NotificationListener<OverscrollIndicatorNotification>(
               onNotification: (overscroll) {
                 overscroll.disallowGlow();
                 return null;
               },
               child: ListView.builder(
-                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(vertical: 5),
                   itemCount: empresa.questionarios.length,
                   itemBuilder: (_, index) {
                     QuestionarioModel questionario = empresa.questionarios[index];
